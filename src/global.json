@@ -1,8 +1,23 @@
 {
+    "default_settings": {
+        "window_height": 400,
+        "window_width": 800,
+        "game_clk": 60        
+    },
     "player": {
         "player_width": 50,
         "player_height": 50,
         "player_x": 200,
-        "player_y": 100
+        "player_y": 60,
+        "player_speed_x": 5,
+        "player_speed_y": 5
+    },
+    "map": {
+        "floor":{
+            "floor_x": 0,
+            "floor_y": 10,
+            "floor_height": 10,
+            "floor_width": 1000
+        }
     }
 }
