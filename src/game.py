@@ -33,26 +33,20 @@ player_y = player_variables['player_y']
 player_speed_x = player_variables['player_speed_x']
 player_speed_y = player_variables['player_speed_y']
 player_color = player_variables['color']
-player_bg_color = player_variables['background_color']
 player_jumping = False
 player_jump_flag = False
 player_jump_maxed = False
 player_max_jump = player_variables['player_max_jump']
-
-player_previous_x = 0
-player_previous_y = 0
-
 # Player draw
-player = pygame.Surface((player_width,player_height))
-player_shadow = pygame.Surface((player_width,player_height))
+player = pygame.Surface((player_width,player_height)) 
 player.fill(player_color)
-player_shadow.fill(player_bg_color)
-player_background = pygame.Surface((player_width+10,player_height+10))
-player_background.fill(player_bg_color)
 
 
-# Map variables
+# Map
 map_variables = global_variables["map"]
+# Map background
+background_variables = map_variables['background']
+map_background_color = background_variables['background_color']
 # Floor variables
 floor_variables = map_variables["floor"]
 floor_width = floor_variables["floor_width"]
@@ -60,8 +54,9 @@ floor_height = floor_variables["floor_height"]
 floor_x = floor_variables["floor_x"]
 floor_y = floor_variables["floor_y"]
 floor_color = floor_variables['color']
-
-
+# Map draw
+map_background = pygame.Surface((window_width, window_height))
+map_background.fill(map_background_color)
 # Floor draw
 floor_background = pygame.Surface((floor_width,floor_height))
 floor_background.fill(floor_color)
@@ -75,6 +70,7 @@ clock = pygame.time.Clock()
 
 # Main loop
 while True:
+    screen.blit(map_background,(0,0))
     # Exit game
     for event in pygame.event.get():
         # If player closes the game
@@ -96,7 +92,6 @@ while True:
     if (player_jump_flag):
         if not player_jumping:
             player_jumping = True
-
         else:
             if not player_jump_maxed:
                 player_y = handle_jumping(player_y)
@@ -115,9 +110,6 @@ while True:
     screen.blit(floor_background,(floor_x,window_height-floor_y))
 
     # Draw player
-    screen.blit(player_shadow,(player_previous_x, player_previous_y))
-    player_previous_x = player_x
-    player_previous_y = player_y
     screen.blit(player,(player_x,player_y))
     
     

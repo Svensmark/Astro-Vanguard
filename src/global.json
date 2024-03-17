@@ -19,6 +19,9 @@
         "player_max_jump": 150
     },
     "map": {
+        "background": {
+            "background_color": "White"
+        },
         "floor":{
             "floor_x": 0,
             "floor_y": 10,
