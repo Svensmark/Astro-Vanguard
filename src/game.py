@@ -19,6 +19,12 @@ window_width = game_settings['window_width']
 fps = game_settings['fps']
 
 
+# Game init
+pygame.init()
+screen = pygame.display.set_mode((window_width,window_height))
+clock = pygame.time.Clock()
+
+
 # World settings
 world_settings = global_variables['world_settings']
 gravity = world_settings['gravity']
@@ -37,16 +43,22 @@ player_jumping = False
 player_jump_flag = False
 player_jump_maxed = False
 player_max_jump = player_variables['player_max_jump']
-# Player draw
-player = pygame.Surface((player_width,player_height)) 
-player.fill(player_color)
+player_looking_right = True
+player_looking_left = False
 
+# Player draw
+ #player = pygame.Surface((player_width,player_height)) 
+ #player.fill(player_color)
+player_right = pygame.image.load('graphics/player_right.png').convert_alpha()
+player_left = pygame.image.load('graphics/player_left.png').convert_alpha()
 
 # Map
 map_variables = global_variables["map"]
 # Map background
-background_variables = map_variables['background']
-map_background_color = background_variables['background_color']
+ #background_variables = map_variables['background']
+ #map_background_color = background_variables['background_color']
+
+
 # Floor variables
 floor_variables = map_variables["floor"]
 floor_width = floor_variables["floor_width"]
@@ -55,17 +67,12 @@ floor_x = floor_variables["floor_x"]
 floor_y = floor_variables["floor_y"]
 floor_color = floor_variables['color']
 # Map draw
-map_background = pygame.Surface((window_width, window_height))
-map_background.fill(map_background_color)
+map_background = pygame.image.load('graphics/background.png').convert_alpha()
 # Floor draw
 floor_background = pygame.Surface((floor_width,floor_height))
-floor_background.fill(floor_color)
+floor_background.fill(pygame.Color(7, 20, 7))
 
 
-# Game init
-pygame.init()
-screen = pygame.display.set_mode((window_width,window_height))
-clock = pygame.time.Clock()
 
 
 # Main loop
@@ -82,11 +89,15 @@ while True:
     keys=pygame.key.get_pressed()
     if keys[pygame.K_LEFT]:
         player_x = player_x - player_speed_x
+        player_looking_left = True
+        player_looking_right = False
 
     if keys[pygame.K_RIGHT]:
         player_x = player_x + player_speed_x
+        player_looking_right = True
+        player_looking_left = False
 
-    if keys[pygame.K_SPACE]:
+    if keys[pygame.K_UP]:
         player_jump_flag = True
 
     if (player_jump_flag):
@@ -110,7 +121,10 @@ while True:
     screen.blit(floor_background,(floor_x,window_height-floor_y))
 
     # Draw player
-    screen.blit(player,(player_x,player_y))
+    if (player_looking_right):
+        screen.blit(player_right,(player_x,player_y))
+    elif (player_looking_left):
+        screen.blit(player_left,(player_x,player_y))
     
     
     pygame.display.update()
