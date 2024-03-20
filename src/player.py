@@ -35,6 +35,10 @@ class Player(pygame.sprite.Sprite):
         if keys[pygame.K_LEFT]:
             self.image =  self.walk_left
             self.rect.x -= player_variables['walk_speed']
+            
+        if keys[pygame.K_UP] and self.rect.bottom >= 400:
+            self.gravity = -15
+            
 
             
     def apply_gravity(self):
