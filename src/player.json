@@ -1,0 +1,9 @@
+{
+    "variables": {
+        "walk_speed": 5
+    },
+    "graphics": {
+        "walk_right": "graphics/player_right.png",
+        "walk_left": "graphics/player_left.png"
+    }
+}
