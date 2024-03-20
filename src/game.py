@@ -46,11 +46,20 @@ player_max_jump = player_variables['player_max_jump']
 player_looking_right = True
 player_looking_left = False
 
+# Player attack animation
+player_attack = False
+player_attacking = False
+player_attack_frames = 20
+player_attack_count = 0
+
 # Player draw
  #player = pygame.Surface((player_width,player_height)) 
  #player.fill(player_color)
 player_right = pygame.image.load('graphics/player_right.png').convert_alpha()
 player_left = pygame.image.load('graphics/player_left.png').convert_alpha()
+
+player_right_attack1 = pygame.image.load('graphics/player_right_attack1.png').convert_alpha()
+player_right_attack2 = pygame.image.load('graphics/player_right_attack2.png').convert_alpha()
 
 # Map
 map_variables = global_variables["map"]
@@ -100,6 +109,10 @@ while True:
     if keys[pygame.K_UP]:
         player_jump_flag = True
 
+    if keys[pygame.K_SPACE]:
+        if (not player_attacking):
+            player_attack = True
+
     if (player_jump_flag):
         if not player_jumping:
             player_jumping = True
@@ -122,9 +135,32 @@ while True:
 
     # Draw player
     if (player_looking_right):
-        screen.blit(player_right,(player_x,player_y))
+        if (player_attack):
+            if (not player_attacking):
+                
+                player_attacking = True
+            else:
+                player_attack_count += 1
+                if (player_attack_count > player_attack_frames):
+                    player_attack = False
+                    player_attacking = False
+                    player_attack_count = 0
+                    player_height = player_variables['player_height']
+                    player_width = player_variables['player_width']
+                elif (player_attack_count < player_attack_frames/2):
+                    player_height = 122
+                    player_width = 76
+                    screen.blit(player_right_attack1,(player_x,player_y))
+                else:
+                    player_height = 122
+                    player_width = 63
+                    screen.blit(player_right_attack2,(player_x,player_y))
+        else:
+            screen.blit(player_right,(player_x,player_y))
+            
     elif (player_looking_left):
         screen.blit(player_left,(player_x,player_y))
+    
     
     
     pygame.display.update()
