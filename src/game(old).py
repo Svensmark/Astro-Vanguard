@@ -2,12 +2,11 @@ import pygame
 from sys import exit
 import json
 from pathlib import Path
-from physics import *
 
 
 # Read variables json
 script_location = Path(__file__).absolute().parent
-file_location = script_location / 'global.json'
+file_location = script_location / 'global(old).json'
 f = open(file_location, 'r')
 global_variables = json.load(f)
 
@@ -113,22 +112,22 @@ while True:
         if (not player_attacking):
             player_attack = True
 
-    if (player_jump_flag):
-        if not player_jumping:
+    #if (player_jump_flag):
+        #if not player_jumping:
             player_jumping = True
-        else:
-            if not player_jump_maxed:
-                player_y = handle_jumping(player_y)
+       # else:
+           # if not player_jump_maxed:
+               # player_y = handle_jumping(player_y)
             
-            if player_y < player_max_jump:
-                player_jump_maxed = True
+           # if player_y < player_max_jump:
+               # player_jump_maxed = True
 
-            if (player_y == window_height-floor_y-player_height):
-                player_jumping = False
-                player_jump_flag = False
-                player_jump_maxed = False
+            #if (player_y == window_height-floor_y-player_height):
+               # player_jumping = False
+                #player_jump_flag = False
+                #player_jump_maxed = False
 
-    player_y = handle_gravity(gravity, player_y, window_height-floor_y-player_height)
+    #player_y = handle_gravity(gravity, player_y, window_height-floor_y-player_height)
 
     # Draw world
     screen.blit(floor_background,(floor_x,window_height-floor_y))

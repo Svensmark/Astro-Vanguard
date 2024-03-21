@@ -3,7 +3,15 @@
         "walk_speed": 5
     },
     "graphics": {
-        "walk_right": "graphics/player_right.png",
-        "walk_left": "graphics/player_left.png"
+        "stand_right": "graphics/player_right.png",
+        "stand_left": "graphics/player_left.png",
+        "attack_right": [
+            "graphics/player_right_attack1.png",
+            "graphics/player_right_attack2.png"
+        ],
+        "attack_left": [
+            "graphics/player_left_attack1.png",
+            "graphics/player_left_attack2.png"
+        ]
     }
 }
