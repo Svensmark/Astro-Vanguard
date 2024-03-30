@@ -1,14 +1,12 @@
 import pygame
 from utils.json_reader import File_reader
 
-
 class Tile():
     def __init__(self, pygame: pygame, screen: pygame.Surface, img_path: str, img_hover_path: str, distortion_factor: float):
         # Initialize
         self.pygame = pygame
         self.screen = screen
-
-        
+                
         self.image = self.pygame.image.load(img_path).convert_alpha()
         self.image_hover = self.pygame.image.load(img_hover_path).convert_alpha()
         

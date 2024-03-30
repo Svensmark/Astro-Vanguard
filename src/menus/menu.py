@@ -25,7 +25,7 @@ class Menu():
         self.click_sound = mixer.Sound('sounds/menu_selection_click.mp3')
 
     
-    def draw_menu(self,screen, mouse: tuple[int,int], click: bool): 
+    def update(self,screen, mouse: tuple[int,int], click: bool): 
         # Draw background
         pygame.transform.scale(self.background, (150,2))
         screen.blit(self.background,(525,0))

@@ -1,24 +1,24 @@
 import pygame
-from game import tile
+from game.tile import Tile
+import random
+from utils.json_reader import File_reader
 
+fr = File_reader()
+tiles = fr.read_json('json/tiles.json')
 
 class Grid():
-    def __init__(self, pygame: pygame, screen: pygame.Surface, grid_matrix: list[list], tile: tile):
+    def __init__(self, pygame: pygame, screen: pygame.Surface, grid_matrix: list[list], tile_type: str, ):
         # Initialize
         self.pygame = pygame
         self.screen = screen
-        #self.tile = pygame.image.load('graphics/tile.png').convert_alpha()
         self.grid_matrix = grid_matrix
         self.tiles = []
         
         for height_i in range(len(self.grid_matrix)):
             for width_j in range(len(self.grid_matrix[height_i])):
-                tile_tba = tile
-                self.tiles.append(tile_tba)
-                #self.tiles.append(pygame.image.load('graphics/tile.png').convert_alpha())
-        
-        #TODO Implement tile as class and parameter in grid init
-        #self.tile = pygame.image.load('graphics/tile.png').convert_alpha()
+                tile = Tile(pygame, screen, 'graphics/'+random.choice(tiles[tile_type]), 'graphics/tile_hover.png', 1.45)
+                self.tiles.append(tile)
+                
         
     def blit_grid(self, mouse: tuple[int, int]):
         self.screen.fill('Black')
@@ -54,7 +54,3 @@ class Grid():
             # Now, re-blit only the topmost hovered tile with the hover effect
             x, y = topmost_tile_position
             topmost_tile.blit(self.screen, x, y, len(self.grid_matrix[x]), True)
-
-
-        
-        return 'play'
