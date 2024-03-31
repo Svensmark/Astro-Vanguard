@@ -1,5 +1,6 @@
 import pygame
 from game.tile import Tile
+from game.player import Player
 import random
 from utils.json_reader import File_reader
 
@@ -12,45 +13,62 @@ class Grid():
         self.pygame = pygame
         self.screen = screen
         self.grid_matrix = grid_matrix
+        
+        # Initiate player
+        self.player = Player(pygame, screen)
+        self.player_x = 0
+        self.player_y = 0
+        self.player_destination_x = 0
+        self.player_destination_y = 0
+        
+
+        # Initiate each tile in the grid
         self.tiles = []
-        
-        for height_i in range(len(self.grid_matrix)):
-            for width_j in range(len(self.grid_matrix[height_i])):
-                tile = Tile(pygame, screen, 'graphics/'+random.choice(tiles[tile_type]), 'graphics/tile_hover.png', 1.45)
-                self.tiles.append(tile)
-                
-        
-    def blit_grid(self, mouse: tuple[int, int]):
-        self.screen.fill('Black')
-        
-        hovered_tiles = []  # Store tiles that are hovered over
-        tile_positions = []  # Store positions of tiles that are hovered over for later comparison
-        
-        # Adjusted to work with a flat list of tiles
-        count = 0
+        self.hovered_tile = None
         for x in range(len(self.grid_matrix)):
             for y in range(len(self.grid_matrix[x])):
-                if self.grid_matrix[x][y] == 0:
-                    continue
-                    
-                current_tile = self.tiles[count]
-                is_hovered = current_tile.hover(mouse, [x, y], len(self.grid_matrix[x]))
-                
-                # Always blit the tile, but record it if it's being hovered over
-                current_tile.blit(self.screen, x, y, len(self.grid_matrix[x]), False)
-                
-                if is_hovered:
-                    hovered_tiles.append((current_tile, count))  # Store the tile and its index
-                    tile_positions.append((x, y))
-                
-                count += 1  # Increment count to access the next tile in the flat list
+                tile = Tile(pygame, screen, 'graphics/'+random.choice(tiles[tile_type]), 'graphics/tile_hover.png', 1.45, x, y)
+                self.tiles.append(tile)
+
         
-        # Determine the topmost hovered tile
+    def blit_grid(self, screen: pygame.Surface, mouse: tuple[int, int], click: bool):
+        self.screen.fill('Black')        
+        
+        hovered_tiles = []
+        tile_positions = []
+        
+        count = 0
+        for tile in self.tiles:            
+            tile.blit(self.screen, tile.x, tile.y, len(self.grid_matrix[tile.x]), False) 
+            is_hovered = tile.hover(mouse, [tile.x, tile.y], len(self.grid_matrix[tile.x]))  
+            
+            if click and is_hovered:
+                hovered_tiles.append((tile, count))
+                tile_positions.append((tile.x, tile.y))
+        
         if hovered_tiles:
             topmost_tile_position = max(tile_positions, key=lambda position: (position[1], position[0]))
             topmost_tile_index = tile_positions.index(topmost_tile_position)
             topmost_tile, _ = hovered_tiles[topmost_tile_index]
             
-            # Now, re-blit only the topmost hovered tile with the hover effect
             x, y = topmost_tile_position
+            self.player_destination_x = topmost_tile.calculate_isometric_x(x,y,len(self.grid_matrix[x]))
+            self.player_destination_y = topmost_tile.calculate_isometric_y(x,y)
+            
             topmost_tile.blit(self.screen, x, y, len(self.grid_matrix[x]), True)
+    
+    # FIX
+    def handle_player_movement(self):
+        if self.player_x < self.player_destination_x:
+            self.player_x += 3
+        else:
+            self.player_x -= 3
+            
+        if self.player_y < self.player_destination_y:
+            self.player_y += 3
+        else:
+            self.player_y -= 3
+    
+    
+    def blit_player(self):
+        self.player.blit_player(self.player_x, self.player_y)
