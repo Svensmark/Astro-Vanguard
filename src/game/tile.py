@@ -2,10 +2,13 @@ import pygame
 from utils.json_reader import File_reader
 
 class Tile():
-    def __init__(self, pygame: pygame, screen: pygame.Surface, img_path: str, img_hover_path: str, distortion_factor: float):
+    def __init__(self, pygame: pygame, screen: pygame.Surface, img_path: str, img_hover_path: str, distortion_factor: float, x: int, y: int):
         # Initialize
         self.pygame = pygame
         self.screen = screen
+        
+        self.x = x
+        self.y = y
                 
         self.image = self.pygame.image.load(img_path).convert_alpha()
         self.image_hover = self.pygame.image.load(img_hover_path).convert_alpha()
@@ -17,7 +20,7 @@ class Tile():
         self.height = self.image.get_height()
         self.distortion_factor = distortion_factor
         
-    
+    # TODO Change methods to use self.x and self.y
     # Calculating isometric coordinates
     def calculate_isometric_x(self, x: int, y: int, grid_length: int):
         return x * 0.5 * self.width + y * (- 0.5) * self.width - self.width/2 + (grid_length / 2) * self.width
@@ -25,7 +28,6 @@ class Tile():
     def calculate_isometric_y(self, x: int, y: int):
         return x * 0.25 * self.height * self.distortion_factor + y * 0.25 * self.height * self.distortion_factor
           
-    
     def blit(self, screen: pygame.Surface, x: int, y: int, grid_length: int, hover: bool):
         if hover:
             screen.blit(self.image_hover, (self.calculate_isometric_x(x, y, grid_length), self.calculate_isometric_y(x, y)))

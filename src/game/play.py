@@ -16,6 +16,7 @@ class Play():
 
 
     def update(self, screen: pygame.surface, mouse: tuple[int,int], click: bool):
-        #Todo tilføj logik for 
-        self.grid.blit_grid(mouse)
+        self.grid.blit_grid(screen,mouse,click)
+        self.grid.handle_player_movement()
+        self.grid.blit_player()
         return 'play'
