@@ -2,39 +2,46 @@ import pygame
 from sys import exit
 import random
 
-from enemy import Enemy
-from player import Player
-from background import Background
+from entities.enemy import Enemy
+from entities.player import Player
+from utils.background import Background
+from utils.json_reader import File_reader
 
 # Game variables
-screen_width = 800
-screen_height = 450
+file_reader_game = File_reader()
 
-player_width = 50
-player_height = 35
+# Game data init
+game_data = file_reader_game.read_json("game.json")
+screen_width = game_data['screen_width']
+screen_height = game_data['screen_height']
+score = 0
+lazers = []
+enemies = []
 
-player_shoot_cooldown = 0
+# Player data init
+player_data = file_reader_game.read_json("player.json")
+player_width = player_data['width']
+player_height = player_data['height']
+player_shoot_cooldown = player_data['shoot_cooldown']
+current_shoot_cooldown = 0
+player_x = player_data['start_x']
+player_y = player_data['start_y']
+max_hp = player_data['max_hp']
+current_hp = max_hp
+
+# Enemy data init
 enemy_spawn_rate = 0
 
+# Lazer data init
 lazer_width = 35
 lazer_height = 5
 
-player_x = 100
-player_y = 100
-
-max_hp = 100
-current_hp = max_hp
-
-score = 0
-
-lazers = []
-enemies = []
 
 game_running = True
 
 # Core game initialization
 pygame.init()
-screen = pygame.display.set_mode((screen_width,screen_height))
+screen = pygame.display.set_mode((screen_width, screen_height))
 clock = pygame.time.Clock()
 
 player = Player(pygame, screen, player_x, player_y, player_width, player_height)
@@ -77,11 +84,13 @@ while True:
         # Handle the lazers
         enemies_to_be_removed = []
         lazers_to_be_removed = []
+
         for lazer in lazers:
             score = lazer.update(lazers_to_be_removed, enemies, score)
 
-        for lazer_tbr in lazers_to_be_removed:
-            lazers.remove(lazer_tbr)
+        # Handle lazers to be removed
+        new_lazers = [lazer for lazer in lazers if lazer not in lazers_to_be_removed]
+        lazers = new_lazers
 
         for enemy in enemies:
             current_hp = enemy.update(current_hp, enemies_to_be_removed)

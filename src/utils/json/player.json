@@ -1,0 +1,8 @@
+{
+    "width": 50,
+    "height": 35,
+    "shoot_cooldown": 10,
+    "start_x": 100,
+    "start_y": 100,
+    "max_hp": 100
+}
