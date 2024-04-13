@@ -25,6 +25,8 @@ game_running = True
 player = Player(pygame, screen, player_data)
 spawner = Spawner(pygame, screen)
 background = Background(pygame, screen)
+hp_bar = pygame.Rect(20, 20, player_data.current_hp, 20)
+hp_bar_background = pygame.Rect(18, 18, player_data.current_hp + 4, 24)
 
 # Main game loop
 while True:
@@ -43,38 +45,40 @@ while True:
         enemies_to_be_removed = []
         lazers_to_be_removed = []
 
-
         # Updates
         player.update(player_data, pygame.key.get_pressed(), game_data, enemies_to_be_removed)
         spawner.update(game_data, player_data, enemy_data)
 
-        # Draw the interface
-        font = pygame.font.Font(None, 36) 
-        hp_surface = font.render('HP: ' + str(player_data.current_hp), True, 'White')
-        point_surface = font.render('Points: ' + str(game_data.score), True, 'White')
-        screen.blit(hp_surface, (20, 20))
-        screen.blit(point_surface, (20, 45))
+        # Update HP bar
+        hp_bar.update(hp_bar.left, hp_bar.top, player_data.current_hp, hp_bar.height)
 
-        
+        # Draw the interface
+        font = pygame.font.Font(None, 36)
+        hp_surface = font.render(str(player_data.current_hp), True, "Black")
+        point_surface = font.render("Points: " + str(game_data.score), True, "White")
+        pygame.draw.rect(screen, (255, 255, 255), hp_bar_background)
+        pygame.draw.rect(screen, (255, 0, 0), hp_bar)
+        # screen.blit(hp_surface, (20, 20))
+        screen.blit(point_surface, (20, 45))
 
         # Handle data to be removed
         for lazer in game_data.lazers:
             lazer.update(lazers_to_be_removed, game_data)
 
-        new_lazers = [lazer for lazer in game_data.lazers if lazer not in lazers_to_be_removed]
+        new_lazers = [
+            lazer for lazer in game_data.lazers if lazer not in lazers_to_be_removed
+        ]
         game_data.lazers = new_lazers
-
 
         # Handle enemies to be removed
         for enemy in game_data.enemies:
             enemy.update(player_data, enemies_to_be_removed)
-        
+
         for enemy in enemies_to_be_removed:
             game_data.enemies.remove(enemy)
 
         if player_data.current_hp == 0:
             game_running = False
-
 
     # If game is not running
     else:
@@ -82,12 +86,9 @@ while True:
         font = pygame.font.Font(None, 36)
         hp_surface = font.render("Game Over!", True, "Black")
         text_rect = hp_surface.get_rect()
-        text_rect.center = (game_data.screen_width/2, game_data.screen_height/2)
+        text_rect.center = (game_data.screen_width / 2, game_data.screen_height / 2)
         screen.blit(hp_surface, text_rect)
-
 
     # Update the game window
     pygame.display.update()
     clock.tick(game_data.fps)
-
-
