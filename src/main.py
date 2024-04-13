@@ -6,7 +6,6 @@ from entities.enemy import Enemy
 from entities.player import Player
 from utils.background import Background
 from utils.data import Data
-from utils.json_reader import File_reader
 
 # Game data init
 data = Data()
@@ -37,8 +36,9 @@ while True:
         # Draw the background
         background.draw()
 
-        # Handle enemies
+        # Data to be removed
         enemies_to_be_removed = []
+        lazers_to_be_removed = []
 
 
         # Draw the player
@@ -62,16 +62,12 @@ while True:
 
         elif enemy_data.spawn_rate != 0:
             enemy_data.spawn_rate -= 1   
+       
 
-
-        # Handle the lazers
-        lazers_to_be_removed = []
-
+        # Handle data to be removed
         for lazer in game_data.lazers:
             lazer.update(lazers_to_be_removed, game_data)
 
-
-        # Handle lazers to be removed
         new_lazers = [lazer for lazer in game_data.lazers if lazer not in lazers_to_be_removed]
         game_data.lazers = new_lazers
 
@@ -95,6 +91,7 @@ while True:
         text_rect = hp_surface.get_rect()
         text_rect.center = (game_data.screen_width/2, game_data.screen_height/2)
         screen.blit(hp_surface, text_rect)
+
 
     # Update the game window
     pygame.display.update()
