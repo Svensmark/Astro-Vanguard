@@ -1,25 +1,24 @@
 from pygame import Rect
 from entities.lazer import Lazer
-from pygame import mixer
+from utils.asset_loader import sprite_loader, sound_loader
 
 
 class Player(Rect):
-    def __init__(self, pygame, screen, player_data):
+    def __init__(self, pygame, screen, player_data, asset_data):
         super().__init__(player_data.x, player_data.y, player_data.width, player_data.height)
         # file_reader_game = File_reader()
         # player_data = file_reader_game.read_json("player.json")
 
         self.pygame = pygame
         self.screen = screen
-        self.sprite = self.pygame.image.load('assets/heroship_1.png').convert_alpha()
+        self.sprite = sprite_loader(self.pygame, 'assets/heroship_1.png')
         self.velocity = player_data.velocity  # Initial velocity
         self.acceleration = player_data.acceleration  # Acceleration factor
         self.max_speed = player_data.max_speed  # Maximum speed
         self.friction = player_data.friction  # Friction factor
         self.shoot_cooldown = player_data.shoot_cooldown  # Shoot cooldown timer
-        ## TODO - Add to json
-        self.shooting_sound = mixer.Sound('assets/player_laser_sound.ogg')
-        self.death = mixer.Sound('assets/player_death_explosion.ogg')
+        self.shooting_sound = sound_loader(asset_data.sounds.lazer)
+        self.death = sound_loader(asset_data.sounds.player_death)
 
     def move(self, keys):
         if keys[self.pygame.K_w]:

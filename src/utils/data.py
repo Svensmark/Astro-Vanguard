@@ -7,15 +7,16 @@ class Data():
         player_data = file_reader_game.read_json("player.json")
         enemy_data = file_reader_game.read_json("enemy.json")
         spawner_data = file_reader_game.read_json("spawner.json")
+        asset_data = file_reader_game.read_json("assets.json")
 
-        global game_data_instance, player_data_instance, enemy_data_instance, spawner_data_instance
+        global game_data_instance, player_data_instance, enemy_data_instance, spawner_data_instance, asset_data_instance
         game_data_instance = GameData(game_data)
         player_data_instance = PlayerData(player_data)
         enemy_data_instance = EnemyData(enemy_data)
         spawner_data_instance = SpawnerData(spawner_data)
+        asset_data_instance = AssetData(asset_data)
 
 
-    
     def get_game_data(self):
         return game_data_instance
 
@@ -24,9 +25,12 @@ class Data():
 
     def get_enemy_data(self):
         return enemy_data_instance
-    
+
     def get_spawner_data(self):
         return spawner_data_instance
+
+    def get_asset_data(self):
+        return asset_data_instance
 
 
 class GameData():
@@ -37,7 +41,7 @@ class GameData():
         self.score = 0
         self.lazers = []
         self.enemies = []
-    
+
     def add_enemy(self, enemy):
         self.enemies.append(enemy)
 
@@ -69,3 +73,29 @@ class SpawnerData():
     def __init__(self, spawner_data):
         self.spawn_rate = spawner_data['spawn_cooldown']
         self.enemy_ships = spawner_data['enemy_ships']
+
+
+class AssetData():
+    def __init__(self, asset_data):
+        self.sounds = SoundsData(asset_data['sounds'])
+        self.images = ImageData(asset_data['images'])
+
+
+class SoundsData():
+    def __init__(self, sounds_data):
+        self.player_death = sounds_data['player_death']
+        self.lazer = sounds_data['lazer']
+        self.enemy_death = sounds_data['enemy_death']
+
+        self.menu_select = sounds_data['menu_select']
+        self.menu_hover = sounds_data['menu_hover']
+
+
+class ImageData():
+    def __init__(self, image_data):
+        # self.player = image_data['player']
+        # self.enemy = image_data['enemy']
+        # self.lazer = image_data['lazer']
+        # self.background = image_data['background']
+
+        self.menu_btn = image_data['menu_btn']

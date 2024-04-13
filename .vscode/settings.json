@@ -6,12 +6,14 @@
 		"centery",
 		"colliderect",
 		"cooldown",
+		"Gameplay",
 		"heroship",
 		"Lazer",
 		"lazers",
 		"midright",
 		"MOUSEBUTTONDOWN",
 		"pygame",
+		"respawn",
 		"topleft"
 	]
 }

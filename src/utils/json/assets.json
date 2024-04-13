@@ -1,0 +1,13 @@
+{
+	"sounds": {
+		"player_death": "assets/sounds/player_explosion.ogg",
+		"lazer": "assets/sounds/lazer.ogg",
+		"enemy_death": "assets/sounds/enemy_explosion.ogg",
+
+		"menu_select": "assets/sounds/menu_selection_click.mp3",
+		"menu_hover": "assets/sounds/menu_selection_hover.mp3"
+	},
+	"images": {
+		"menu_btn": "assets/images/blank_btn.png"
+	}
+}

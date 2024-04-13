@@ -1,19 +1,19 @@
 import pygame
 from typing import Callable
-from pygame import mixer
+from pygame.mixer import Sound
 
 color = (255,255,255)  # white
 color_light = (170,170,170)
 color_dark = (100,100,100)  # dark shade of the button
 
 class Button(pygame.sprite.Sprite):
-    def __init__(self, screen: pygame.Surface, pygame: pygame, x: int, y: int, text: str, function: Callable):
+    def __init__(self, screen: pygame.Surface, btn_image: pygame.Surface, x: int, y: int, text: str, function: Callable):
         super().__init__()
         self.screen = screen
 
         self.x = x
         self.y = y
-        self.btn_img = pygame.image.load('assets/blank_btn.png').convert_alpha()
+        self.btn_img = btn_image
         self.color = "Black"
         self.text = text
 
@@ -27,7 +27,7 @@ class Button(pygame.sprite.Sprite):
     def hover(self, mouse: tuple[int,int]):
         return self.x <= mouse[0] <= self.x + self.rect.width and self.y <= mouse[1] <= self.y + self.rect.height
 
-    def set_hover(self, sound: mixer.Sound):
+    def set_hover(self, sound: Sound):
         if (not self.hovering):
             self.color = "Red"
             self.hovering = True

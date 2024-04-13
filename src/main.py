@@ -1,6 +1,5 @@
 import pygame
 from sys import exit
-import random
 
 from controller.entity_controller import Spawner
 from entities.enemy import Enemy
@@ -17,6 +16,7 @@ game_data = data.get_game_data()
 player_data = data.get_player_data()
 enemy_data = data.get_enemy_data()
 spawner_data = data.get_spawner_data()
+asset_data = data.get_asset_data()
 
 
 # Core game initialization
@@ -28,14 +28,14 @@ click = False
 
 
 # Helper classes init
-player = Player(pygame, screen, player_data)
+player = Player(pygame, screen, player_data, asset_data)
 spawner = Spawner(pygame, screen)
 background = Background(pygame, screen)
 interface = Interface(pygame, screen, player_data)
 
 
 # Scenes
-main_menu = get_main_menu(pygame, screen, background)
+main_menu = get_main_menu(pygame, screen, background, asset_data)
 ## TODO - Add scene for playing
 # Scene selector
 scene_selector = "Main"
@@ -64,7 +64,7 @@ while True:
 
                 # Updates
                 player.update(player_data, pygame.key.get_pressed(), game_data)
-                spawner.update(game_data, player_data, enemy_data, spawner_data)
+                spawner.update(game_data, player_data, enemy_data, spawner_data, asset_data)
                 interface.update(player_data, game_data)
 
                 # Handle data to be removed
