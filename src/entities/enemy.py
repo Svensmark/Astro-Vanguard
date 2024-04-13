@@ -1,6 +1,6 @@
 from pygame import Rect
 from utils.json_reader import File_reader
-import random
+from pygame import mixer
 
 
 # create an enemy class extending pygame.Rect
@@ -12,7 +12,7 @@ class Enemy(Rect):
         super().__init__(x, y, enemy_data['width'], enemy_data['height'])
         self.pygame = pygame
         self.screen = screen
-        
+        self.collision_sound = mixer.Sound('assets/Enemy_explosion.ogg')
         self.sprite = self.pygame.image.load(asset).convert_alpha()
 
     def move(self):

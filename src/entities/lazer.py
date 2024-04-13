@@ -31,6 +31,7 @@ class Lazer(Rect):
             if self.colliderect(enemy):
                 game_data.lazers.remove(self)
                 game_data.enemies.remove(enemy)
+                enemy.collision_sound.play()
                 game_data.score += 10
 
     def update(self, game_data):

@@ -1,6 +1,6 @@
 from pygame import Rect
 from entities.lazer import Lazer
-from utils.json_reader import File_reader
+from pygame import mixer
 
 
 class Player(Rect):
@@ -17,6 +17,9 @@ class Player(Rect):
         self.max_speed = player_data.max_speed  # Maximum speed
         self.friction = player_data.friction  # Friction factor
         self.shoot_cooldown = player_data.shoot_cooldown  # Shoot cooldown timer
+        ## TODO - Add to json
+        self.shooting_sound = mixer.Sound('assets/player_laser_sound.ogg')
+        self.death = mixer.Sound('assets/player_death_explosion.ogg')
 
     def move(self, keys):
         if keys[self.pygame.K_w]:
@@ -47,6 +50,7 @@ class Player(Rect):
     def shoot(self, keys, game_data):
         if keys[self.pygame.K_SPACE]:
             if self.shoot_cooldown == 0:
+                self.shooting_sound.play()
                 game_data.lazers.append(Lazer(self.pygame, self.screen, self.midright[0], self.midright[1]))
                 self.shoot_cooldown = 15
 
@@ -60,6 +64,7 @@ class Player(Rect):
     def handle_collision(self, player_data, game_data):
         for enemy in  game_data.enemies:
             if self.colliderect(enemy):
+                enemy.collision_sound.play()
                 game_data.enemies.remove(enemy)
                 player_data.current_hp -= 20
 

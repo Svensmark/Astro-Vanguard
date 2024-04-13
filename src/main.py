@@ -79,6 +79,7 @@ while True:
 
         # Check if game is over
         if player_data.current_hp == 0:
+            player.death.play()
             game_running = False
 
 
