@@ -48,6 +48,7 @@ while True:
         player.update(player_data, pygame.key.get_pressed(), game_data, enemies_to_be_removed)
         spawner.update(game_data, player_data, enemy_data)
 
+
         # Draw the interface
         font = pygame.font.Font(None, 36) 
         hp_surface = font.render('HP: ' + str(player_data.current_hp), True, 'White')
@@ -55,7 +56,6 @@ while True:
         screen.blit(hp_surface, (20, 20))
         screen.blit(point_surface, (20, 45))
 
-        
 
         # Handle data to be removed
         for lazer in game_data.lazers:
@@ -67,7 +67,7 @@ while True:
 
         # Handle enemies to be removed
         for enemy in game_data.enemies:
-            enemy.update(player_data, enemies_to_be_removed)
+            enemy.update(enemies_to_be_removed)
         
         for enemy in enemies_to_be_removed:
             game_data.enemies.remove(enemy)

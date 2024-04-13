@@ -19,6 +19,7 @@ class Spawner():
 
         elif enemy_data.spawn_rate != 0:
             enemy_data.spawn_rate -= 1   
+    
 
     def update(self, game_data, player_data, enemy_data):
         self.spawn_enemy(game_data, player_data, enemy_data)

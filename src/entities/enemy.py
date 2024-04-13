@@ -16,10 +16,13 @@ class Enemy(Rect):
     def move(self):
         self.x -= 5
 
+    def location(self, x):
+        self.x = x
+
     def draw(self):
         self.screen.blit(self.sprite, self)
 
-    def update(self, player_data, enemies_to_be_removed):
+    def update(self, enemies_to_be_removed):
         self.move()
         self.draw()
 
