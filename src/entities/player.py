@@ -57,15 +57,15 @@ class Player(Rect):
     def draw(self):
         self.screen.blit(self.sprite, self)
 
-    def handle_collision(self, player_data, game_data, enemies_to_be_removed):
+    def handle_collision(self, player_data, game_data):
         for enemy in  game_data.enemies:
             if self.colliderect(enemy):
-                enemies_to_be_removed.append(enemy)
+                game_data.enemies.remove(enemy)
                 player_data.current_hp -= 20
 
-    def update(self, player_data, keys, game_data, enemies_to_be_removed):
+    def update(self, player_data, keys, game_data):
         self.draw()
         self.move(keys)
         self.shoot(keys, game_data)
         self.cooldown()
-        self.handle_collision(player_data, game_data, enemies_to_be_removed)
+        self.handle_collision(player_data, game_data)

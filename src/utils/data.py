@@ -13,6 +13,8 @@ class Data():
         player_data_instance = PlayerData(player_data)
         enemy_data_instance = EnemyData(enemy_data)
         spawner_data_instance = SpawnerData(spawner_data)
+
+
     
     def get_game_data(self):
         return game_data_instance
@@ -59,7 +61,8 @@ class PlayerData():
 
 class EnemyData():
     def __init__(self, enemy_data):
-        self.spawn_rate = 0
+        self.spawn_rate = enemy_data['spawn_rate']
+        #self.spawn_rate = 0
 
 
 class SpawnerData():

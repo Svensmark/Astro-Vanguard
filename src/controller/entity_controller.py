@@ -1,7 +1,4 @@
-
-
 import random
-
 from entities.enemy import Enemy
 
 
@@ -20,6 +17,10 @@ class Spawner():
         elif enemy_data.spawn_rate != 0:
             enemy_data.spawn_rate -= 1   
     
+    def handle_update_enemy(self, game_data):
+        for enemy in game_data.enemies:
+            enemy.update()
 
     def update(self, game_data, player_data, enemy_data):
+        self.handle_update_enemy(game_data)
         self.spawn_enemy(game_data, player_data, enemy_data)

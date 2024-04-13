@@ -12,25 +12,26 @@ class Lazer(pygame.Rect):
 
         self.screen = screen
 
-    def move(self):
+    def move(self, game_data):
         self.x += 5
+
+        if self.x > self.screen.get_width():
+            game_data.lazers.remove(self)
 
     def draw(self):
         pygame.draw.rect(self.screen, 'Red', self)
     
-    def handle_collision(self, game_data, lazers_to_be_removed):
+    def handle_collision(self, game_data):
         for enemy in game_data.enemies:
             if self.colliderect(enemy):
-                lazers_to_be_removed.append(self)
+                game_data.lazers.remove(self)
                 game_data.enemies.remove(enemy)
                 game_data.score += 10
 
-    def update(self, lazers_to_be_removed, game_data):
-        self.move()
+    def update(self, game_data):
+        self.move(game_data)
         self.draw()
+        self.handle_collision(game_data)
 
-        self.handle_collision(game_data, lazers_to_be_removed)
-
-        if self.x > self.screen.get_width():
-            lazers_to_be_removed.append(self)
+        
         
