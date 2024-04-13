@@ -44,7 +44,7 @@ while True:
         lazers_to_be_removed = []
 
 
-        # Draw the player
+        # Updates
         player.update(player_data, pygame.key.get_pressed(), game_data, enemies_to_be_removed)
         spawner.update(game_data, player_data, enemy_data)
 
