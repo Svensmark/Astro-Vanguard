@@ -1,5 +1,6 @@
 import pygame
 
+
 # create a lazer class extending pygame.Rect
 class Lazer(pygame.Rect):
     def __init__(self, screen, x, y, width, height):
@@ -10,8 +11,8 @@ class Lazer(pygame.Rect):
         self.x += 5
 
     def draw(self):
-        pygame.draw.rect(self.screen, 'Red', self)
-    
+        pygame.draw.rect(self.screen, "Red", self)
+
     def handle_collision(self, enemies, score, lazers_to_be_removed):
         for enemy in enemies:
             if self.colliderect(enemy):
@@ -28,5 +29,5 @@ class Lazer(pygame.Rect):
 
         if self.x > self.screen.get_width():
             lazers_to_be_removed.append(self)
-        
+
         return score
