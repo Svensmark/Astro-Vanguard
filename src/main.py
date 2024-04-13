@@ -2,6 +2,7 @@ import pygame
 from sys import exit
 import random
 
+from controller.spawner import Spawner
 from entities.enemy import Enemy
 from entities.player import Player
 from utils.background import Background
@@ -12,6 +13,7 @@ data = Data()
 game_data = data.get_game_data()
 player_data = data.get_player_data()
 enemy_data = data.get_enemy_data()
+spawner_data = data.get_spawner_data()
 
 # Core game initialization
 pygame.init()
@@ -21,6 +23,7 @@ clock = pygame.time.Clock()
 game_running = True
 
 player = Player(pygame, screen, player_data)
+spawner = Spawner(pygame, screen)
 background = Background(pygame, screen)
 hp_bar = pygame.Rect(20, 20, player_data.current_hp, 20)
 hp_bar_background = pygame.Rect(18, 18, player_data.current_hp + 4, 24)
@@ -46,6 +49,7 @@ while True:
         player.update(
             player_data, pygame.key.get_pressed(), game_data, enemies_to_be_removed
         )
+        spawner.update(game_data, player_data, enemy_data)
 
         # Update HP bar
         hp_bar.update(hp_bar.left, hp_bar.top, player_data.current_hp, hp_bar.height)
@@ -58,18 +62,6 @@ while True:
         pygame.draw.rect(screen, (255, 0, 0), hp_bar)
         # screen.blit(hp_surface, (20, 20))
         screen.blit(point_surface, (20, 45))
-
-        # Handle the enemies
-        if enemy_data.spawn_rate == 0:
-            enemy_y = random.randint(
-                30, game_data.screen_height - player_data.height - 30
-            )
-            enemy = Enemy(pygame, screen, game_data.screen_width, enemy_y)
-            game_data.enemies.append(enemy)
-            enemy_data.spawn_rate = 60
-
-        elif enemy_data.spawn_rate != 0:
-            enemy_data.spawn_rate -= 1
 
         # Handle data to be removed
         for lazer in game_data.lazers:
