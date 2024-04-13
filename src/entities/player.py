@@ -2,12 +2,13 @@ from pygame import Rect
 from entities.lazer import Lazer
 import math
 
+
 class Player(Rect):
     def __init__(self, pygame, screen, x, y, width, height):
         super().__init__(x, y, width, height)
         self.pygame = pygame
         self.screen = screen
-        self.sprite = self.pygame.image.load('assets/heroship_1.png').convert_alpha()
+        self.sprite = self.pygame.image.load("assets/heroship_1.png").convert_alpha()
         self.velocity = [0, 0]  # Initial velocity
         self.acceleration = 1  # Acceleration factor
         self.max_speed = 10  # Maximum speed
@@ -25,8 +26,8 @@ class Player(Rect):
             self.velocity[0] += self.acceleration
 
         # Apply friction
-        self.velocity[0] *= (1 - self.friction)
-        self.velocity[1] *= (1 - self.friction)
+        self.velocity[0] *= 1 - self.friction
+        self.velocity[1] *= 1 - self.friction
 
         # Limit speed
         self.velocity[0] = max(-self.max_speed, min(self.velocity[0], self.max_speed))
@@ -43,7 +44,9 @@ class Player(Rect):
     def shoot(self, keys, lazers):
         if keys[self.pygame.K_SPACE]:
             if self.shoot_cooldown == 0:
-                lazers.append(Lazer(self.screen, self.midright[0], self.midright[1], 20, 5))
+                lazers.append(
+                    Lazer(self.screen, self.midright[0], self.midright[1], 20, 5)
+                )
                 self.shoot_cooldown = 15
 
     def cooldown(self):
@@ -53,8 +56,16 @@ class Player(Rect):
     def draw(self):
         self.screen.blit(self.sprite, self)
 
-    def update(self, keys, lazers):
+    def handle_collision(self, enemies, enemies_to_be_removed, current_hp):
+        for enemy in enemies:
+            if self.colliderect(enemy):
+                enemies_to_be_removed.append(enemy)
+                current_hp -= 20
+        return current_hp
+
+    def update(self, keys, lazers, enemies, enemies_to_be_removed, current_hp):
         self.draw()
         self.move(keys)
         self.shoot(keys, lazers)
         self.cooldown()
+        return self.handle_collision(enemies, enemies_to_be_removed, current_hp)
