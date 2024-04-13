@@ -44,10 +44,10 @@ class Player(Rect):
         self.x = max(0, min(self.x, self.screen.get_width() - self.width))
         self.y = max(0, min(self.y, self.screen.get_height() - self.height))
 
-    def shoot(self, keys, lazers):
+    def shoot(self, keys, game_data):
         if keys[self.pygame.K_SPACE]:
             if self.shoot_cooldown == 0:
-                lazers.append(Lazer(self.screen, self.midright[0], self.midright[1]))
+                game_data.lazers.append(Lazer(self.screen, self.midright[0], self.midright[1]))
                 self.shoot_cooldown = 15
 
     def cooldown(self):
@@ -57,16 +57,15 @@ class Player(Rect):
     def draw(self):
         self.screen.blit(self.sprite, self)
 
-    def handle_collision(self, enemies, enemies_to_be_removed, current_hp):
-        for enemy in enemies:
+    def handle_collision(self, player_data, game_data, enemies_to_be_removed):
+        for enemy in  game_data.enemies:
             if self.colliderect(enemy):
                 enemies_to_be_removed.append(enemy)
-                current_hp -= 20
-        return current_hp
+                player_data.current_hp -= 20
 
-    def update(self, keys, lazers, enemies, enemies_to_be_removed, current_hp):
+    def update(self, player_data, keys, game_data, enemies_to_be_removed):
         self.draw()
         self.move(keys)
-        self.shoot(keys, lazers)
+        self.shoot(keys, game_data)
         self.cooldown()
-        return self.handle_collision(enemies, enemies_to_be_removed, current_hp)
+        self.handle_collision(player_data, game_data, enemies_to_be_removed)

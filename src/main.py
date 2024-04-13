@@ -42,9 +42,7 @@ while True:
 
 
         # Draw the player
-        player.update(
-            pygame.key.get_pressed(), game_data.lazers, game_data.enemies, enemies_to_be_removed, player_data.current_hp
-        )
+        player.update(player_data, pygame.key.get_pressed(), game_data, enemies_to_be_removed)
 
 
         # Draw the interface
@@ -53,6 +51,7 @@ while True:
         point_surface = font.render('Points: ' + str(game_data.score), True, 'White')
         screen.blit(hp_surface, (20, 20))
         screen.blit(point_surface, (20, 45))
+
 
         # Handle the enemies
         if enemy_data.spawn_rate == 0:
