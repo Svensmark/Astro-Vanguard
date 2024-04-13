@@ -6,11 +6,13 @@ class Data():
         game_data = file_reader_game.read_json("game.json")
         player_data = file_reader_game.read_json("player.json")
         enemy_data = file_reader_game.read_json("enemy.json")
+        spawner_data = file_reader_game.read_json("spawner.json")
 
-        global game_data_instance, player_data_instance, enemy_data_instance
+        global game_data_instance, player_data_instance, enemy_data_instance, spawner_data_instance
         game_data_instance = GameData(game_data)
         player_data_instance = PlayerData(player_data)
         enemy_data_instance = EnemyData(enemy_data)
+        spawner_data_instance = SpawnerData(spawner_data)
     
     def get_game_data(self):
         return game_data_instance
@@ -20,6 +22,10 @@ class Data():
 
     def get_enemy_data(self):
         return enemy_data_instance
+    
+    def get_spawner_data(self):
+        return spawner_data_instance
+
 
 class GameData():
     def __init__(self, game_data):
@@ -29,6 +35,10 @@ class GameData():
         self.score = 0
         self.lazers = []
         self.enemies = []
+    
+    def add_enemy(self, enemy):
+        self.enemies.append(enemy)
+
 
 class PlayerData():
     def __init__(self, player_data):
@@ -46,6 +56,13 @@ class PlayerData():
         self.friction = player_data['friction']  # Friction factor
         self.shoot_cooldown = player_data['shoot_cooldown']  # Shoot cooldown timer
 
+
 class EnemyData():
     def __init__(self, enemy_data):
         self.spawn_rate = 0
+
+
+class SpawnerData():
+    def __init__(self, spawner_data):
+        self.spawn_rate = spawner_data['spawn_cooldown']
+        self.enemy_ships = spawner_data['enemy_ships']
