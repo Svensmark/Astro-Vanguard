@@ -6,6 +6,7 @@ from controller.entity_controller import Spawner
 from entities.enemy import Enemy
 from entities.player import Player
 from utils.background import Background
+from ui.interface import Interface
 from utils.data import Data
 from menus.menu import get_main_menu
 
@@ -30,11 +31,8 @@ click = False
 player = Player(pygame, screen, player_data)
 spawner = Spawner(pygame, screen)
 background = Background(pygame, screen)
+interface = Interface(pygame, screen, player_data)
 
-
-## TODO - Use interface class
-hp_bar = pygame.Rect(20, 20, player_data.current_hp, 20)
-hp_bar_background = pygame.Rect(18, 18, player_data.current_hp + 4, 24)
 
 # Scenes
 main_menu = get_main_menu(pygame, screen, background)
@@ -64,25 +62,10 @@ while True:
                 # Draw the background
                 background.draw()
 
-
                 # Updates
                 player.update(player_data, pygame.key.get_pressed(), game_data)
                 spawner.update(game_data, player_data, enemy_data, spawner_data)
-
-
-                # Update HP bar
-                hp_bar.update(hp_bar.left, hp_bar.top, player_data.current_hp, hp_bar.height)
-
-
-                # Draw the interface
-                ## TODO - Move into interface class
-                font = pygame.font.Font(None, 36)
-                hp_surface = font.render(str(player_data.current_hp), True, "Black")
-                point_surface = font.render("Points: " + str(game_data.score), True, "White")
-                pygame.draw.rect(screen, (255, 255, 255), hp_bar_background)
-                pygame.draw.rect(screen, (255, 0, 0), hp_bar)
-                screen.blit(point_surface, (20, 45))
-
+                interface.update(player_data, game_data)
 
                 # Handle data to be removed
                 for lazer in game_data.lazers:
@@ -94,14 +77,16 @@ while True:
                     player.death.play()
                     game_running = False
 
-
             # If game is not running
             else:
                 screen.fill("Red")
                 font = pygame.font.Font(None, 36)
                 hp_surface = font.render("Game Over!", True, "Black")
                 text_rect = hp_surface.get_rect()
-                text_rect.center = (game_data.screen_width / 2, game_data.screen_height / 2)
+                text_rect.center = (
+                    game_data.screen_width / 2,
+                    game_data.screen_height / 2,
+                )
                 screen.blit(hp_surface, text_rect)
 
     # Update the game windows
