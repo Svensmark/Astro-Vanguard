@@ -8,7 +8,7 @@ class Player(Rect):
         super().__init__(player_data.x, player_data.y, player_data.width, player_data.height)
         # file_reader_game = File_reader()
         # player_data = file_reader_game.read_json("player.json")
-        
+
         self.pygame = pygame
         self.screen = screen
         self.sprite = self.pygame.image.load('assets/heroship_1.png').convert_alpha()

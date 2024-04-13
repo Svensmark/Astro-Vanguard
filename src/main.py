@@ -37,8 +37,8 @@ interface = Interface(pygame, screen, player_data)
 # Scenes
 main_menu = get_main_menu(pygame, screen, background)
 ## TODO - Add scene for playing
-# Scene selecter
-scene_selecter = "Main"
+# Scene selector
+scene_selector = "Main"
 
 
 # Main game loop
@@ -54,9 +54,9 @@ while True:
         if event.type == pygame.MOUSEBUTTONDOWN:
             click = True
 
-    match scene_selecter:
+    match scene_selector:
         case "Main":
-            scene_selecter = main_menu.update(screen, mouse, click)
+            scene_selector = main_menu.update(screen, mouse, click)
         case "Start":
             if game_running:
                 # Draw the background
