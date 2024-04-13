@@ -45,10 +45,8 @@ while True:
         enemies_to_be_removed = []
         lazers_to_be_removed = []
 
-        # Draw the player
-        player.update(
-            player_data, pygame.key.get_pressed(), game_data, enemies_to_be_removed
-        )
+        # Updates
+        player.update(player_data, pygame.key.get_pressed(), game_data, enemies_to_be_removed)
         spawner.update(game_data, player_data, enemy_data)
 
         # Update HP bar
