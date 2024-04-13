@@ -1,17 +1,19 @@
 from pygame import Rect
 from utils.json_reader import File_reader
+import random
 
 
 # create an enemy class extending pygame.Rect
 class Enemy(Rect):
-    def __init__(self, pygame, screen, x, y):
+    def __init__(self, pygame, screen, x, y, asset):
         file_reader_game = File_reader()
         enemy_data = file_reader_game.read_json("enemy.json")
         
         super().__init__(x, y, enemy_data['width'], enemy_data['height'])
         self.pygame = pygame
         self.screen = screen
-        self.sprite = self.pygame.image.load("assets/enemy_ship_1.png").convert_alpha()
+        
+        self.sprite = self.pygame.image.load(asset).convert_alpha()
 
     def move(self):
         self.x -= 5

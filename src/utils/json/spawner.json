@@ -1,8 +1,8 @@
 {
     "spawn_cooldown": 60,
     "enemy_ships": [
-        "enemy_ship_1.png",
-        "enemy_ship_2.png",
-        "enemy_ship_3.png"
+        "assets/enemy_ship_1.png",
+        "assets/enemy_ship_2.png",
+        "assets/enemy_ship_3.png"
     ]
 }

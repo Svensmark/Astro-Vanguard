@@ -1,16 +1,20 @@
-import pygame
+from pygame import Rect
 from utils.json_reader import File_reader
 
 
 # create a lazer class extending pygame.Rect
-class Lazer(pygame.Rect):
-    def __init__(self, screen, x, y):
+class Lazer(Rect):
+    def __init__(self, pygame, screen, x, y):
+        self.pygame = pygame
+        self.screen = screen
+
         file_reader_game = File_reader()
         lazer_data = file_reader_game.read_json("lazer.json")
+        self.sprite = self.pygame.image.load('assets/lazer_bolt.png').convert_alpha()
         
         super().__init__(x, y, lazer_data['width'], lazer_data['height'])
 
-        self.screen = screen
+        
 
     def move(self, game_data):
         self.x += 5
@@ -19,7 +23,8 @@ class Lazer(pygame.Rect):
             game_data.lazers.remove(self)
 
     def draw(self):
-        pygame.draw.rect(self.screen, 'Red', self)
+        self.screen.blit(self.sprite, self)
+        
     
     def handle_collision(self, game_data):
         for enemy in game_data.enemies:

@@ -56,7 +56,7 @@ while True:
 
         # Updates
         player.update(player_data, pygame.key.get_pressed(), game_data)
-        spawner.update(game_data, player_data, enemy_data)
+        spawner.update(game_data, player_data, enemy_data, spawner_data)
 
 
         # Update HP bar
@@ -76,7 +76,6 @@ while True:
         # Handle data to be removed
         for lazer in game_data.lazers:
             lazer.update(game_data)
-            
 
         # Check if game is over
         if player_data.current_hp == 0:
@@ -92,7 +91,6 @@ while True:
         text_rect.center = (game_data.screen_width / 2, game_data.screen_height / 2)
         screen.blit(hp_surface, text_rect)
 
-    # Update the game window
-    print(len(game_data.enemies))
+    # Update the game windows
     pygame.display.update()
     clock.tick(game_data.fps)
