@@ -1,19 +1,22 @@
 from pygame import Rect
 from entities.lazer import Lazer
-import math
+from utils.json_reader import File_reader
 
 
 class Player(Rect):
-    def __init__(self, pygame, screen, x, y, width, height):
-        super().__init__(x, y, width, height)
+    def __init__(self, pygame, screen, player_data):
+        super().__init__(player_data.x, player_data.y, player_data.width, player_data.height)
+        # file_reader_game = File_reader()
+        # player_data = file_reader_game.read_json("player.json")
+        
         self.pygame = pygame
         self.screen = screen
-        self.sprite = self.pygame.image.load("assets/heroship_1.png").convert_alpha()
-        self.velocity = [0, 0]  # Initial velocity
-        self.acceleration = 1  # Acceleration factor
-        self.max_speed = 10  # Maximum speed
-        self.friction = 0.15  # Friction factor
-        self.shoot_cooldown = 0  # Shoot cooldown timer
+        self.sprite = self.pygame.image.load('assets/heroship_1.png').convert_alpha()
+        self.velocity = player_data.velocity  # Initial velocity
+        self.acceleration = player_data.acceleration  # Acceleration factor
+        self.max_speed = player_data.max_speed  # Maximum speed
+        self.friction = player_data.friction  # Friction factor
+        self.shoot_cooldown = player_data.shoot_cooldown  # Shoot cooldown timer
 
     def move(self, keys):
         if keys[self.pygame.K_w]:
@@ -41,12 +44,10 @@ class Player(Rect):
         self.x = max(0, min(self.x, self.screen.get_width() - self.width))
         self.y = max(0, min(self.y, self.screen.get_height() - self.height))
 
-    def shoot(self, keys, lazers):
+    def shoot(self, keys, game_data):
         if keys[self.pygame.K_SPACE]:
             if self.shoot_cooldown == 0:
-                lazers.append(
-                    Lazer(self.screen, self.midright[0], self.midright[1], 20, 5)
-                )
+                game_data.lazers.append(Lazer(self.screen, self.midright[0], self.midright[1]))
                 self.shoot_cooldown = 15
 
     def cooldown(self):
@@ -56,16 +57,15 @@ class Player(Rect):
     def draw(self):
         self.screen.blit(self.sprite, self)
 
-    def handle_collision(self, enemies, enemies_to_be_removed, current_hp):
-        for enemy in enemies:
+    def handle_collision(self, player_data, game_data, enemies_to_be_removed):
+        for enemy in  game_data.enemies:
             if self.colliderect(enemy):
                 enemies_to_be_removed.append(enemy)
-                current_hp -= 20
-        return current_hp
+                player_data.current_hp -= 20
 
-    def update(self, keys, lazers, enemies, enemies_to_be_removed, current_hp):
+    def update(self, player_data, keys, game_data, enemies_to_be_removed):
         self.draw()
         self.move(keys)
-        self.shoot(keys, lazers)
+        self.shoot(keys, game_data)
         self.cooldown()
-        return self.handle_collision(enemies, enemies_to_be_removed, current_hp)
+        self.handle_collision(player_data, game_data, enemies_to_be_removed)
