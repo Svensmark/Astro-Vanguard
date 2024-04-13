@@ -1,18 +1,21 @@
 from pygame import Rect
 from entities.lazer import Lazer
-import math
+from utils.json_reader import File_reader
 
 class Player(Rect):
-    def __init__(self, pygame, screen, x, y, width, height):
-        super().__init__(x, y, width, height)
+    def __init__(self, pygame, screen, player_data):
+        super().__init__(player_data.x, player_data.y, player_data.width, player_data.height)
+        # file_reader_game = File_reader()
+        # player_data = file_reader_game.read_json("player.json")
+        
         self.pygame = pygame
         self.screen = screen
         self.sprite = self.pygame.image.load('assets/heroship_1.png').convert_alpha()
-        self.velocity = [0, 0]  # Initial velocity
-        self.acceleration = 1  # Acceleration factor
-        self.max_speed = 10  # Maximum speed
-        self.friction = 0.15  # Friction factor
-        self.shoot_cooldown = 0  # Shoot cooldown timer
+        self.velocity = player_data.velocity  # Initial velocity
+        self.acceleration = player_data.acceleration  # Acceleration factor
+        self.max_speed = player_data.max_speed  # Maximum speed
+        self.friction = player_data.friction  # Friction factor
+        self.shoot_cooldown = player_data.shoot_cooldown  # Shoot cooldown timer
 
     def move(self, keys):
         if keys[self.pygame.K_w]:
@@ -43,7 +46,7 @@ class Player(Rect):
     def shoot(self, keys, lazers):
         if keys[self.pygame.K_SPACE]:
             if self.shoot_cooldown == 0:
-                lazers.append(Lazer(self.screen, self.midright[0], self.midright[1], 20, 5))
+                lazers.append(Lazer(self.screen, self.midright[0], self.midright[1]))
                 self.shoot_cooldown = 15
 
     def cooldown(self):
