@@ -23,6 +23,7 @@ game_running = True
 player = Player(pygame, screen, player_data)
 background = Background(pygame, screen)
 hp_bar = pygame.Rect(20, 20, player_data.current_hp, 20)
+hp_bar_background = pygame.Rect(18, 18, player_data.current_hp + 4, 24)
 
 # Main game loop
 while True:
@@ -51,10 +52,11 @@ while True:
 
         # Draw the interface
         font = pygame.font.Font(None, 36)
-        hp_surface = font.render("HP: " + str(player_data.current_hp), True, "White")
+        hp_surface = font.render(str(player_data.current_hp), True, "Black")
         point_surface = font.render("Points: " + str(game_data.score), True, "White")
+        pygame.draw.rect(screen, (255, 255, 255), hp_bar_background)
         pygame.draw.rect(screen, (255, 0, 0), hp_bar)
-        screen.blit(hp_surface, (20, 20))
+        # screen.blit(hp_surface, (20, 20))
         screen.blit(point_surface, (20, 45))
 
         # Handle the enemies
