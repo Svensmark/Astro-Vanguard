@@ -37,9 +37,14 @@ while True:
         # Draw the background
         background.draw()
 
+        # Handle enemies
+        enemies_to_be_removed = []
+
 
         # Draw the player
-        player.update(pygame.key.get_pressed(), game_data.lazers)
+        player.update(
+            pygame.key.get_pressed(), game_data.lazers, game_data.enemies, enemies_to_be_removed, player_data.current_hp
+        )
 
 
         # Draw the interface
@@ -48,7 +53,6 @@ while True:
         point_surface = font.render('Points: ' + str(game_data.score), True, 'White')
         screen.blit(hp_surface, (20, 20))
         screen.blit(point_surface, (20, 45))
-
 
         # Handle the enemies
         if enemy_data.spawn_rate == 0:
@@ -62,7 +66,6 @@ while True:
 
 
         # Handle the lazers
-        enemies_to_be_removed = []
         lazers_to_be_removed = []
 
         for lazer in game_data.lazers:
@@ -87,9 +90,9 @@ while True:
 
     # If game is not running
     else:
-        screen.fill('Red')
-        font = pygame.font.Font(None, 36) 
-        hp_surface = font.render('Game Over!', True, 'Black')
+        screen.fill("Red")
+        font = pygame.font.Font(None, 36)
+        hp_surface = font.render("Game Over!", True, "Black")
         text_rect = hp_surface.get_rect()
         text_rect.center = (game_data.screen_width/2, game_data.screen_height/2)
         screen.blit(hp_surface, text_rect)

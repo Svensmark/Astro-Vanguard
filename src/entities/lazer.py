@@ -1,6 +1,7 @@
 import pygame
 from utils.json_reader import File_reader
 
+
 # create a lazer class extending pygame.Rect
 class Lazer(pygame.Rect):
     def __init__(self, screen, x, y):
@@ -31,4 +32,4 @@ class Lazer(pygame.Rect):
         self.handle_collision(game_data, lazers_to_be_removed)
 
         if self.x > self.screen.get_width():
-            lazers_to_be_removed.append(self)
+        

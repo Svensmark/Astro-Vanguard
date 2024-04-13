@@ -2,6 +2,7 @@ from pygame import Rect
 from entities.lazer import Lazer
 from utils.json_reader import File_reader
 
+
 class Player(Rect):
     def __init__(self, pygame, screen, player_data):
         super().__init__(player_data.x, player_data.y, player_data.width, player_data.height)
@@ -28,8 +29,8 @@ class Player(Rect):
             self.velocity[0] += self.acceleration
 
         # Apply friction
-        self.velocity[0] *= (1 - self.friction)
-        self.velocity[1] *= (1 - self.friction)
+        self.velocity[0] *= 1 - self.friction
+        self.velocity[1] *= 1 - self.friction
 
         # Limit speed
         self.velocity[0] = max(-self.max_speed, min(self.velocity[0], self.max_speed))
@@ -46,7 +47,13 @@ class Player(Rect):
     def shoot(self, keys, lazers):
         if keys[self.pygame.K_SPACE]:
             if self.shoot_cooldown == 0:
+<<<<<<< HEAD
                 lazers.append(Lazer(self.screen, self.midright[0], self.midright[1]))
+=======
+                lazers.append(
+                    Lazer(self.screen, self.midright[0], self.midright[1], 20, 5)
+                )
+>>>>>>> 02e571df87d69f34c1cee8ec0d1cc663a65b3ffa
                 self.shoot_cooldown = 15
 
     def cooldown(self):
@@ -56,8 +63,16 @@ class Player(Rect):
     def draw(self):
         self.screen.blit(self.sprite, self)
 
-    def update(self, keys, lazers):
+    def handle_collision(self, enemies, enemies_to_be_removed, current_hp):
+        for enemy in enemies:
+            if self.colliderect(enemy):
+                enemies_to_be_removed.append(enemy)
+                current_hp -= 20
+        return current_hp
+
+    def update(self, keys, lazers, enemies, enemies_to_be_removed, current_hp):
         self.draw()
         self.move(keys)
         self.shoot(keys, lazers)
         self.cooldown()
+        return self.handle_collision(enemies, enemies_to_be_removed, current_hp)
