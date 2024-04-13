@@ -8,6 +8,10 @@ class Background:
         self.bg_2 = self.pygame.transform.scale(self.pygame.image.load('assets/background.png').convert_alpha(), (self.screen.get_width(), self.screen.get_height()))
         self.bg_1_x = 0
         self.bg_2_x =  self.screen.get_width()
+        
+    def draw_static(self):
+        self.screen.fill('White')
+        self.screen.blit(self.bg_1, (self.bg_1_x,0))
 
     def draw(self):
         self.screen.fill('White')
