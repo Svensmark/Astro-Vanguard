@@ -46,6 +46,7 @@ clock = pygame.time.Clock()
 
 player = Player(pygame, screen, player_x, player_y, player_width, player_height)
 background = Background(pygame, screen)
+hp_bar = pygame.Rect(20, 20, current_hp, 20)
 
 # Main game loop
 while True:
@@ -65,13 +66,21 @@ while True:
 
         # Draw the player
         current_hp = player.update(
-            pygame.key.get_pressed(), lazers, enemies, enemies_to_be_removed, current_hp
+            pygame.key.get_pressed(),
+            lazers,
+            enemies,
+            enemies_to_be_removed,
+            current_hp,
         )
+
+        # Update HP bar
+        hp_bar.update(hp_bar.left, hp_bar.top, current_hp, hp_bar.height)
 
         # Draw the interface
         font = pygame.font.Font(None, 36)
-        hp_surface = font.render("HP: " + str(current_hp), True, "White")
+        hp_surface = font.render(str(current_hp), True, "White")
         point_surface = font.render("Points: " + str(score), True, "White")
+        pygame.draw.rect(screen, (255, 0, 0), hp_bar)
         screen.blit(hp_surface, (20, 20))
         screen.blit(point_surface, (20, 45))
 
