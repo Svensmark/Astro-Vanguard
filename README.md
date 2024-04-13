@@ -9,7 +9,7 @@ This project is a modern rendition of the classic arcade game Space Invaders. Pl
 - Scoring System: Points are awarded for each enemy ship destroyed.
 - Game Menus: Basic menus for starting the game and displaying scores.
 
-##Future Goals and Ideas
+## Future Goals and Ideas
 - Enhanced AI: Implement more complex enemy behaviors and patterns.
 - Multiple Levels: Design multiple game levels with increasing difficulty.
 - Power-ups: Introduce power-ups that the player can collect for temporary advantages.
