@@ -32,4 +32,5 @@ class Lazer(pygame.Rect):
         self.handle_collision(game_data, lazers_to_be_removed)
 
         if self.x > self.screen.get_width():
+            lazers_to_be_removed.append(self)
         

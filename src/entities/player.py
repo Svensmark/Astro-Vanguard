@@ -47,13 +47,7 @@ class Player(Rect):
     def shoot(self, keys, lazers):
         if keys[self.pygame.K_SPACE]:
             if self.shoot_cooldown == 0:
-<<<<<<< HEAD
                 lazers.append(Lazer(self.screen, self.midright[0], self.midright[1]))
-=======
-                lazers.append(
-                    Lazer(self.screen, self.midright[0], self.midright[1], 20, 5)
-                )
->>>>>>> 02e571df87d69f34c1cee8ec0d1cc663a65b3ffa
                 self.shoot_cooldown = 15
 
     def cooldown(self):
