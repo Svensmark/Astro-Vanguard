@@ -1,26 +1,35 @@
+"""
+Module for Player class
+"""
 from pygame import Rect
 from entities.lazer import Lazer
 from utils.asset_loader import sprite_loader, sound_loader
-
+from utils.data import AssetData
 
 class Player(Rect):
-    def __init__(self, pygame, screen, player_data, asset_data):
-        super().__init__(player_data.x, player_data.y, player_data.width, player_data.height)
-        # file_reader_game = File_reader()
-        # player_data = file_reader_game.read_json("player.json")
-
+    """
+    Class for Player extending pygame.Rect
+    """
+    def __init__(self, pygame, screen, player_data, asset_data: AssetData):
+        super().__init__(player_data.start_x, player_data.start_y, player_data.width, player_data.height)
+        print(type(asset_data.sounds))
         self.pygame = pygame
         self.screen = screen
         self.sprite = sprite_loader(self.pygame, 'assets/heroship_1.png')
-        self.velocity = player_data.velocity  # Initial velocity
-        self.acceleration = player_data.acceleration  # Acceleration factor
-        self.max_speed = player_data.max_speed  # Maximum speed
-        self.friction = player_data.friction  # Friction factor
-        self.shoot_cooldown = player_data.shoot_cooldown  # Shoot cooldown timer
+        self.velocity = player_data.velocity
+        self.acceleration = player_data.acceleration
+        self.max_speed = player_data.max_speed
+        self.friction = player_data.friction
+        self.shoot_cooldown = player_data.shoot_cooldown
         self.shooting_sound = sound_loader(asset_data.sounds.lazer)
         self.death = sound_loader(asset_data.sounds.player_death)
+        self.x = player_data.start_x
+        self.y = player_data.start_y
 
     def move(self, keys):
+        """
+        Method for moving player
+        """
         if keys[self.pygame.K_w]:
             self.velocity[1] -= self.acceleration
         if keys[self.pygame.K_s]:
@@ -47,6 +56,9 @@ class Player(Rect):
         self.y = max(0, min(self.y, self.screen.get_height() - self.height))
 
     def shoot(self, keys, game_data):
+        """
+        Method for player shooting
+        """
         if keys[self.pygame.K_SPACE]:
             if self.shoot_cooldown == 0:
                 self.shooting_sound.play()
@@ -54,20 +66,32 @@ class Player(Rect):
                 self.shoot_cooldown = 15
 
     def cooldown(self):
+        """
+        Method for cooldown
+        """
         if self.shoot_cooldown != 0:
             self.shoot_cooldown -= 1
 
     def draw(self):
+        """
+        Method for drawing player
+        """
         self.screen.blit(self.sprite, self)
 
     def handle_collision(self, player_data, game_data):
-        for enemy in  game_data.enemies:
+        """
+        Method for handling collision
+        """
+        for enemy in game_data.enemies:
             if self.colliderect(enemy):
                 enemy.collision_sound.play()
                 game_data.enemies.remove(enemy)
                 player_data.current_hp -= 20
 
     def update(self, player_data, keys, game_data):
+        """
+        Method for updating player
+        """
         self.draw()
         self.move(keys)
         self.shoot(keys, game_data)

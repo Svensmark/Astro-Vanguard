@@ -1,101 +1,104 @@
-from utils.json_reader import File_reader
+"""
+Module for Data and related classes
+"""
+import dataclasses
+from utils.json_reader import FileReader
 
-class Data():
+@dataclasses.dataclass
+class Data:
+    """
+    Class for Data
+    """
+    game_data: 'GameData'
+    player_data: 'PlayerData'
+    enemy_data: 'EnemyData'
+    spawner_data: 'SpawnerData'
+    asset_data: 'AssetData'
+
     def __init__(self):
-        file_reader_game = File_reader()
-        game_data = file_reader_game.read_json("game.json")
-        player_data = file_reader_game.read_json("player.json")
-        enemy_data = file_reader_game.read_json("enemy.json")
-        spawner_data = file_reader_game.read_json("spawner.json")
-        asset_data = file_reader_game.read_json("assets.json")
+        file_reader = FileReader()
+        assets = file_reader.read_json("assets.json")
+        self.game_data = GameData(**file_reader.read_json("game.json"))
+        self.player_data = PlayerData(**file_reader.read_json("player.json"))
+        self.enemy_data = EnemyData(**file_reader.read_json("enemy.json"))
+        self.spawner_data = SpawnerData(**file_reader.read_json("spawner.json"))
+        self.asset_data = AssetData(
+            sounds=SoundsData(**assets['sounds']),
+            images=ImageData(**assets['images'])
+        )
 
-        global game_data_instance, player_data_instance, enemy_data_instance, spawner_data_instance, asset_data_instance
-        game_data_instance = GameData(game_data)
-        player_data_instance = PlayerData(player_data)
-        enemy_data_instance = EnemyData(enemy_data)
-        spawner_data_instance = SpawnerData(spawner_data)
-        asset_data_instance = AssetData(asset_data)
+@dataclasses.dataclass
+class GameData:
+    """
+    Class for GameData
+    """
+    screen_width: int
+    screen_height: int
+    fps: int
+    score: int = 0
+    lazers: list = dataclasses.field(default_factory=list)
+    enemies: list = dataclasses.field(default_factory=list)
 
+@dataclasses.dataclass
+class PlayerData:
+    """
+    Class for PlayerData
+    """
+    width: int
+    height: int
+    start_x: int
+    start_y: int
+    max_hp: int
+    velocity: int  # Initial velocity
+    acceleration: int  # Acceleration factor
+    max_speed: int  # Maximum speed
+    friction: int  # Friction factor
+    shoot_cooldown: int  # Shoot cooldown timer
+    current_shoot_cooldown: int = 0
+    current_hp: int = dataclasses.field(init=False)
 
-    def get_game_data(self):
-        return game_data_instance
-
-    def get_player_data(self):
-        return player_data_instance
-
-    def get_enemy_data(self):
-        return enemy_data_instance
-
-    def get_spawner_data(self):
-        return spawner_data_instance
-
-    def get_asset_data(self):
-        return asset_data_instance
-
-
-class GameData():
-    def __init__(self, game_data):
-        self.screen_width = game_data['screen_width']
-        self.screen_height = game_data['screen_height']
-        self.fps = game_data['fps']
-        self.score = 0
-        self.lazers = []
-        self.enemies = []
-
-    def add_enemy(self, enemy):
-        self.enemies.append(enemy)
-
-
-class PlayerData():
-    def __init__(self, player_data):
-        self.width = player_data['width']
-        self.height = player_data['height']
-        self.current_shoot_cooldown = 0
-        self.x = player_data['start_x']
-        self.y = player_data['start_y']
-        self.max_hp = player_data['max_hp']
+    def __post_init__(self):
         self.current_hp = self.max_hp
 
-        self.velocity = player_data['velocity']  # Initial velocity
-        self.acceleration = player_data['acceleration']  # Acceleration factor
-        self.max_speed = player_data['max_speed']  # Maximum speed
-        self.friction = player_data['friction']  # Friction factor
-        self.shoot_cooldown = player_data['shoot_cooldown']  # Shoot cooldown timer
+@dataclasses.dataclass
+class EnemyData:
+    """
+    Class for EnemyData
+    """
+    width: int
+    height: int
+    spawn_rate: int
 
+@dataclasses.dataclass
+class SpawnerData:
+    """
+    Class for SpawnerData
+    """
+    spawn_cooldown: int
+    enemy_ships: list
 
-class EnemyData():
-    def __init__(self, enemy_data):
-        self.spawn_rate = enemy_data['spawn_rate']
-        #self.spawn_rate = 0
+@dataclasses.dataclass
+class AssetData:
+    """
+    Class for AssetData
+    """
+    sounds: 'SoundsData'
+    images: 'ImageData'
 
+@dataclasses.dataclass
+class SoundsData:
+    """
+    Class for SoundsData
+    """
+    player_death: str
+    lazer: str
+    enemy_death: str
+    menu_select: str
+    menu_hover: str
 
-class SpawnerData():
-    def __init__(self, spawner_data):
-        self.spawn_rate = spawner_data['spawn_cooldown']
-        self.enemy_ships = spawner_data['enemy_ships']
-
-
-class AssetData():
-    def __init__(self, asset_data):
-        self.sounds = SoundsData(asset_data['sounds'])
-        self.images = ImageData(asset_data['images'])
-
-
-class SoundsData():
-    def __init__(self, sounds_data):
-        self.player_death = sounds_data['player_death']
-        self.lazer = sounds_data['lazer']
-        self.enemy_death = sounds_data['enemy_death']
-
-        self.menu_select = sounds_data['menu_select']
-        self.menu_hover = sounds_data['menu_hover']
-
-
-class ImageData():
-    def __init__(self, image_data):
-        # self.player = image_data['player']
-        # self.enemy = image_data['enemy']
-        # self.lazer = image_data['lazer']
-        # self.background = image_data['background']
-
-        self.menu_btn = image_data['menu_btn']
+@dataclasses.dataclass
+class ImageData:
+    """
+    Class for ImageData
+    """
+    menu_btn: str

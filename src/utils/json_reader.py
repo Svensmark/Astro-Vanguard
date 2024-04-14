@@ -1,21 +1,21 @@
+"""
+Module for reading JSON files
+"""
 import json
 from pathlib import Path
 
-class File_reader():
-    def __init__(self):
-        # Read variables json
-        pass
+class FileReader:
+    """
+    Class for reading JSON files
+    """
 
-
-    def read_animation_array(self, *argv):
-        json = self.json
-        for arg in argv:
-            json = json[arg]
-        return json
-
-    def read_json(self, file_path: str):
+    @staticmethod
+    def read_json(file_path: str):
+        """
+        Read a JSON file and return its content
+        """
         script_location = Path(__file__).absolute().parent
         file_location = script_location / 'json' / file_path
-        f = open(file_location, 'r')
-        json_loaded = json.load(f)
+        with open(file_location, 'r', encoding='utf-8') as file:
+            json_loaded = json.load(file)
         return json_loaded
