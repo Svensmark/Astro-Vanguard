@@ -1,5 +1,16 @@
 # Space Invaders
 
+## Pylint Score
+
+Your code has been rated at 9.36/10
+
+Run pylint yourself with this line:
+> OBS! requeres pylint to be installed
+
+```powershell
+pylint $(git ls-files '*.py')
+```
+
 ## Project Description
 
 This project is a modern rendition of the classic arcade game Space Invaders. Players control a spaceship, dodging and destroying incoming alien ships to earn points while avoiding their attacks. This game is developed in Python and utilizes various modules to handle graphics, sound, and game logic.

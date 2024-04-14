@@ -13,6 +13,7 @@
 		"midright",
 		"MOUSEBUTTONDOWN",
 		"pygame",
+		"pylint",
 		"respawn",
 		"topleft"
 	]

@@ -1,10 +1,10 @@
 """
 Main game file
 """
+import sys
 import pygame
 # pylint: disable=no-name-in-module
 from pygame.constants import QUIT, MOUSEBUTTONDOWN
-# from pygame.constants import QUIT
 # pylint: enable=no-name-in-module
 
 from utils.data import Data
@@ -57,7 +57,7 @@ while True:
             # pylint: disable=no-member
             pygame.quit()
             # pylint: enable=no-member
-            exit()
+            sys.exit()
         if event.type == MOUSEBUTTONDOWN:
             CLICK = True
 

@@ -1,6 +1,7 @@
 """
 Module for Menu class and related functions
 """
+import sys
 import pygame
 from menus import button_module
 from utils.asset_loader import sprite_loader, sound_loader
@@ -46,7 +47,7 @@ def quit_game():
     # pylint: disable=no-member
     pygame.quit()
     # pylint: enable=no-member
-    exit(0)
+    sys.exit(0)
 
 def start_game() -> str:
     """
