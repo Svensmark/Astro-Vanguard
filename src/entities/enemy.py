@@ -4,6 +4,7 @@ Module for Enemy class
 from pygame import Rect
 from utils.json_reader import FileReader
 from utils.asset_loader import sprite_loader, sound_loader
+import math
 
 class Enemy(Rect):
     """
@@ -17,8 +18,14 @@ class Enemy(Rect):
         self.pygame = pygame
         self.screen = screen
         self.collision_sound = sound_loader(collision_sound)
-        self.sprite = sprite_loader(self.pygame, asset)
+        #self.sprite = sprite_loader(self.pygame, asset)
         self.x = x
+        
+        self.animation_list = []
+        self.frame_index = 0
+        for i in range(4):
+            self.animation_list.append(sprite_loader(self.pygame, f'assets/enemyship_1/enemy_ship_1_{i+1}.png'))
+
 
     def move(self):
         """
@@ -32,6 +39,11 @@ class Enemy(Rect):
         """
         Method for drawing enemy
         """
+        if (self.frame_index >= len(self.animation_list)):
+            self.frame_index = 0
+        else:
+            self.frame_index += 0.1
+        self.sprite = self.animation_list[math.floor(self.frame_index-1)]
         self.screen.blit(self.sprite, self)
 
     def update(self):

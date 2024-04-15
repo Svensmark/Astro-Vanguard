@@ -29,7 +29,7 @@ class Lazer(Rect):
         """
         self.x += 5
 
-        if self.x > self.screen.get_width():
+        if self.x > self.screen.get_width()+50:
             game_data.lazers.remove(self)
 
     def draw(self):

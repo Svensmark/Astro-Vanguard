@@ -5,6 +5,7 @@ from pygame import Rect
 from entities.lazer import Lazer
 from utils.asset_loader import sprite_loader, sound_loader
 from utils.data import AssetData
+import math
 
 class Player(Rect):
     """
@@ -25,6 +26,11 @@ class Player(Rect):
         self.death = sound_loader(asset_data.sounds.player_death)
         self.x = player_data.start_x
         self.y = player_data.start_y
+
+        self.animation_list = []
+        self.frame_index = 0
+        for i in range(4):
+            self.animation_list.append(sprite_loader(self.pygame, f'assets/heroship/heroship_animated_{i+1}.png'))
 
     def move(self, keys):
         """
@@ -76,6 +82,12 @@ class Player(Rect):
         """
         Method for drawing player
         """
+        
+        if (self.frame_index >= len(self.animation_list)):
+            self.frame_index = 0
+        else:
+            self.frame_index += 0.1
+        self.sprite = self.animation_list[math.floor(self.frame_index-1)]
         self.screen.blit(self.sprite, self)
 
     def handle_collision(self, player_data, game_data):
