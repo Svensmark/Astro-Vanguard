@@ -4,7 +4,7 @@ Module for Spawner class
 import random
 from entities.enemy import Enemy
 
-## TODO - Rename to controller
+## TODO - Rename to SpawnerController
 class Spawner:
     """
     Class for spawning and updating enemies
@@ -21,7 +21,7 @@ class Spawner:
         if enemy_data.spawn_rate == 0:
             enemy_y = random.randint(30, game_data.screen_height-player_data.height-30)
             random_ship_img = spawner_data.enemy_ships[random.randint(0, len(spawner_data.enemy_ships))-1]
-            enemy = Enemy(self.pygame, self.screen, game_data.screen_width, enemy_y, random_ship_img, asset_data.sounds.enemy_death)
+            enemy = Enemy(self.pygame, self.screen, game_data.screen_width, enemy_y, asset_data.sounds.enemy_death)
             game_data.enemies.append(enemy)
             enemy_data.spawn_rate = 60
         elif enemy_data.spawn_rate != 0:
