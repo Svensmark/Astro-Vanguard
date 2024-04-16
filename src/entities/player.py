@@ -1,17 +1,17 @@
 """
 Module for Player class
 """
-from pygame import Rect
+import pygame
 from entities.lazer import Lazer
 from utils.asset_loader import sprite_loader, sound_loader
-from utils.data import AssetData
+from utils.data import AssetData, GameData, PlayerData
 import math
 
-class Player(Rect):
+class Player(pygame.Rect):
     """
     Class for Player extending pygame.Rect
     """
-    def __init__(self, pygame, screen, player_data, asset_data: AssetData):
+    def __init__(self, pygame: pygame, screen: pygame.surface, player_data: PlayerData, asset_data: AssetData):
         super().__init__(player_data.start_x, player_data.start_y, player_data.width, player_data.height)
         print(type(asset_data.sounds))
         self.pygame = pygame
@@ -31,8 +31,9 @@ class Player(Rect):
         self.frame_index = 0
         for i in range(4):
             self.animation_list.append(sprite_loader(self.pygame, f'assets/heroship/heroship_animated_{i+1}.png'))
+            
 
-    def move(self, keys):
+    def move(self, keys: tuple[bool, ...]):
         """
         Method for moving player
         """
@@ -60,8 +61,9 @@ class Player(Rect):
         # Ensure player stays within screen boundaries
         self.x = max(0, min(self.x, self.screen.get_width() - self.width))
         self.y = max(0, min(self.y, self.screen.get_height() - self.height))
+        
 
-    def shoot(self, keys, game_data):
+    def shoot(self, keys: tuple[bool, ...], game_data: GameData):
         """
         Method for player shooting
         """
@@ -70,6 +72,7 @@ class Player(Rect):
                 self.shooting_sound.play()
                 game_data.lazers.append(Lazer(self.pygame, self.screen, self.midright[0], self.midright[1]))
                 self.shoot_cooldown = 15
+                
 
     def cooldown(self):
         """
@@ -77,6 +80,7 @@ class Player(Rect):
         """
         if self.shoot_cooldown != 0:
             self.shoot_cooldown -= 1
+            
 
     def draw(self):
         """
@@ -88,10 +92,10 @@ class Player(Rect):
         else:
             self.frame_index += 0.1
         self.sprite = self.animation_list[math.floor(self.frame_index-1)]
-        #surf = self.pygame.transform.scale(self.sprite, (50,35))
         self.screen.blit(self.sprite, self)
+        
 
-    def handle_collision(self, player_data, game_data):
+    def handle_collision(self, player_data: PlayerData, game_data: GameData):
         """
         Method for handling collision
         """
@@ -101,7 +105,8 @@ class Player(Rect):
                 game_data.enemies.remove(enemy)
                 player_data.current_hp -= 20
 
-    def update(self, player_data, keys, game_data):
+
+    def update(self, player_data: PlayerData, keys: tuple[bool, ...], game_data: GameData):
         """
         Method for updating player
         """
