@@ -16,7 +16,7 @@ class Player(Rect):
         print(type(asset_data.sounds))
         self.pygame = pygame
         self.screen = screen
-        self.sprite = sprite_loader(self.pygame, 'assets/heroship_1.png')
+        self.sprite = sprite_loader(self.pygame, 'assets/heroship/player2.png')
         self.velocity = player_data.velocity
         self.acceleration = player_data.acceleration
         self.max_speed = player_data.max_speed
@@ -88,6 +88,7 @@ class Player(Rect):
         else:
             self.frame_index += 0.1
         self.sprite = self.animation_list[math.floor(self.frame_index-1)]
+        #surf = self.pygame.transform.scale(self.sprite, (50,35))
         self.screen.blit(self.sprite, self)
 
     def handle_collision(self, player_data, game_data):
