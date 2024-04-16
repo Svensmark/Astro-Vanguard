@@ -1,17 +1,18 @@
 """
 Module for Lazer class
 """
-from pygame import Rect
+import pygame
 from utils.json_reader import FileReader
 from utils.asset_loader import sprite_loader
+from utils.data import GameData
 
 
 # create a lazer class extending pygame.Rect
-class Lazer(Rect):
+class Lazer(pygame.Rect):
     """
     Class for spawning and updating lazer
     """
-    def __init__(self, pygame, screen, x, y):
+    def __init__(self, pygame: pygame, screen: pygame.surface, x: int, y: int):
         self.pygame = pygame
         self.screen = screen
         self.x = x
@@ -23,7 +24,7 @@ class Lazer(Rect):
         super().__init__(x, y, lazer_data['width'], lazer_data['height'])
 
 
-    def move(self, game_data):
+    def move(self, game_data: GameData):
         """
         Method for moving the lazer
         """
@@ -38,7 +39,7 @@ class Lazer(Rect):
         """
         self.screen.blit(self.sprite, self)
 
-    def handle_collision(self, game_data):
+    def handle_collision(self, game_data: GameData):
         """
         Method for handling collision
         """
@@ -49,7 +50,7 @@ class Lazer(Rect):
                 enemy.collision_sound.play()
                 game_data.score += 10
 
-    def update(self, game_data):
+    def update(self, game_data: GameData):
         """
         Method for updating lazer
         """
