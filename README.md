@@ -1,4 +1,4 @@
-# Space Invaders
+# Astro Vanguard
 
 ## Pylint Score
 

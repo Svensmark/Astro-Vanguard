@@ -27,7 +27,7 @@ asset_data = data.asset_data
 # pylint: disable=no-member
 pygame.init()
 # pylint: enable=no-member
-pygame.display.set_caption('Space Invaders')
+pygame.display.set_caption('Astro Vanguard')
 screen = pygame.display.set_mode((game_data.screen_width, game_data.screen_height))
 clock = pygame.time.Clock()
 GAME_RUNNING = True

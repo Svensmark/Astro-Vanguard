@@ -1,16 +1,16 @@
 """
 Module for Enemy class
 """
-from pygame import Rect
+import pygame
 from utils.json_reader import FileReader
 from utils.asset_loader import sprite_loader, sound_loader
 import math
 
-class Enemy(Rect):
+class Enemy(pygame.Rect):
     """
     Class for Enemy extending pygame.Rect
     """
-    def __init__(self, pygame, screen, x, y, asset, collision_sound):
+    def __init__(self, pygame: pygame, screen: pygame.surface, x: int, y: int, collision_sound: pygame.mixer.Sound):
         file_reader_game = FileReader()
         enemy_data = file_reader_game.read_json("enemy.json")
 
@@ -18,7 +18,6 @@ class Enemy(Rect):
         self.pygame = pygame
         self.screen = screen
         self.collision_sound = sound_loader(collision_sound)
-        #self.sprite = sprite_loader(self.pygame, asset)
         self.x = x
         
         self.animation_list = []
@@ -35,6 +34,7 @@ class Enemy(Rect):
         if self.x < 0:
             self.x = 800
 
+
     def draw(self):
         """
         Method for drawing enemy
@@ -45,6 +45,7 @@ class Enemy(Rect):
             self.frame_index += 0.1
         self.sprite = self.animation_list[math.floor(self.frame_index-1)]
         self.screen.blit(self.sprite, self)
+
 
     def update(self):
         """
