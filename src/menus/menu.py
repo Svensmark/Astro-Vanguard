@@ -3,7 +3,7 @@ Module for Menu class and related functions
 """
 import sys
 import pygame
-from menus import button_module
+from ui import button_module
 from utils.asset_loader import sprite_loader, sound_loader
 from utils.background import Background
 from utils.data import AssetData

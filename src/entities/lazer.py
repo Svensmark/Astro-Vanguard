@@ -57,3 +57,4 @@ class Lazer(pygame.Rect):
         self.move(game_data)
         self.draw()
         self.handle_collision(game_data)
+        

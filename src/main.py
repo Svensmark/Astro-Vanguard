@@ -7,10 +7,13 @@ import pygame
 from pygame.constants import QUIT, MOUSEBUTTONDOWN
 # pylint: enable=no-name-in-module
 
+from managers.scene_manager import SceneController
+from scenes.game import GameScene
+from scenes.main_menu import MainMenu
 from utils.data import Data
 from utils.background import Background
 from ui.interface import Interface
-from controller.entity_controller import Spawner
+from managers.entity_manager import Spawner
 from entities.player import Player
 from menus.menu import get_main_menu
 
@@ -42,7 +45,14 @@ interface = Interface(pygame, screen, player_data)
 
 # Scenes
 main_menu = get_main_menu(pygame, screen, background, asset_data)
-## TODO - Add scene for playing
+# TODO - Move scenes to json
+scenes = {
+    "MainMenu": MainMenu(pygame, screen),
+    "GameScene": GameScene()
+}
+scene_manager = SceneController(scenes)
+scene_manager.set_scene('MainMenu')
+
 # Scene selector
 SCENE_SELECTOR = "Main"
 
@@ -61,40 +71,42 @@ while True:
         if event.type == MOUSEBUTTONDOWN:
             CLICK = True
 
-    match SCENE_SELECTOR:
-        case "Main":
-            SCENE_SELECTOR = main_menu.update(mouse, CLICK)
-        case "Start":
-            if GAME_RUNNING:
-                # Draw the background
-                background.draw()
+    scene_controller.update_current_scene()
 
-                # Updates
-                player.update(player_data, pygame.key.get_pressed(), game_data)
-                spawner.update(game_data, player_data, enemy_data, spawner_data, asset_data)
-                interface.update(player_data, game_data)
+    # match SCENE_SELECTOR:
+    #     case "Main":
+    #         SCENE_SELECTOR = main_menu.update(mouse, CLICK)
+    #     case "Start":
+    #         if GAME_RUNNING:
+    #             # Draw the background
+    #             background.draw()
 
-                # Handle data to be removed
-                for lazer in game_data.lazers:
-                    lazer.update(game_data)
+    #             # Updates
+    #             player.update(player_data, pygame.key.get_pressed(), game_data)
+    #             spawner.update(game_data, player_data, enemy_data, spawner_data, asset_data)
+    #             interface.update(player_data, game_data)
 
-                # Check if game is over
-                ## TODO - Add menu for death screen
-                if player_data.current_hp == 0:
-                    player.death.play()
-                    GAME_RUNNING = False
+    #             # Handle data to be removed
+    #             for lazer in game_data.lazers:
+    #                 lazer.update(game_data)
 
-            # If game is not running
-            else:
-                screen.fill("Red")
-                font = pygame.font.Font(None, 36)
-                hp_surface = font.render("Game Over!", True, "Black")
-                text_rect = hp_surface.get_rect()
-                text_rect.center = (
-                    game_data.screen_width / 2,
-                    game_data.screen_height / 2,
-                )
-                screen.blit(hp_surface, text_rect)
+    #             # Check if game is over
+    #             ## TODO - Add menu for death screen
+    #             if player_data.current_hp == 0:
+    #                 player.death.play()
+    #                 GAME_RUNNING = False
+
+    #         # If game is not running
+    #         else:
+    #             screen.fill("Red")
+    #             font = pygame.font.Font(None, 36)
+    #             hp_surface = font.render("Game Over!", True, "Black")
+    #             text_rect = hp_surface.get_rect()
+    #             text_rect.center = (
+    #                 game_data.screen_width / 2,
+    #                 game_data.screen_height / 2,
+    #             )
+    #             screen.blit(hp_surface, text_rect)
 
     # Update the game windows
     pygame.display.update()
