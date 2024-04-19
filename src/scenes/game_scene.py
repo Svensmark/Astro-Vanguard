@@ -8,12 +8,11 @@ from utils.data import Data
 
 
 class GameScene(Scene):
-    def __init__(self, pygame_module: pygame, screen: pygame.Surface, events: pygame.event, data: Data):
-        super().__init__(pygame_module, screen, events, data)
+    def __init__(self, pygame_module: pygame, screen: pygame.Surface, data: Data):
+        super().__init__(pygame_module, screen, data)
         self.name = 'GameScene'
         self.pygame_module = pygame_module
         self.screen = screen
-        self.events = events
         self.data = data
 
         self.background = Background(self.pygame_module, self.screen)
@@ -21,11 +20,11 @@ class GameScene(Scene):
         self.spawner = Spawner(pygame, screen)
         self.interface = Interface(pygame, screen, data.player_data)
         
-    def update(self):
+    def update(self, events):
         self.background.draw()
 
         # Updates
-        self.player.update(self.data.player_data, pygame.key.get_pressed(), self.data.game_data)
+        self.player.update(self.data.player_data, self.pygame_module.key.get_pressed(), self.data.game_data)
         self.spawner.update(self.data.game_data, self.data.player_data, self.data.enemy_data, self.data.spawner_data, self.data.asset_data)
         self.interface.update(self.data.player_data, self.data.game_data)
 

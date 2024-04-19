@@ -8,12 +8,11 @@ from utils.data import Data
 
 
 class DeathScene(Scene):
-    def __init__(self, pygame_module: pygame, screen: pygame.Surface, events: pygame.event, data: Data):
-        super().__init__(pygame_module, screen, events, data)
+    def __init__(self, pygame_module: pygame, screen: pygame.Surface, data: Data):
+        super().__init__(pygame_module, screen, data)
         self.name = 'DeathScene'
         self.pygame_module = pygame_module
         self.screen = screen
-        self.events = events
         self.data = data
 
         self.background = Background(self.pygame_module, self.screen)
@@ -21,7 +20,7 @@ class DeathScene(Scene):
         self.spawner = Spawner(pygame, screen)
         self.interface = Interface(pygame, screen, data.player_data)
         
-    def update(self):
+    def update(self, events):
         self.screen.fill("Red")
         font = pygame.font.Font(None, 36)
         hp_surface = font.render("Game Over!", True, "Black")

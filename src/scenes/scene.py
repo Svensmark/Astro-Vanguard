@@ -9,13 +9,12 @@ class Scene:
 
     name: str
 
-    def __init__(self, pygame_module: pygame, screen: pygame.Surface, events: pygame.event, data: Data):
+    def __init__(self, pygame_module: pygame, screen: pygame.Surface, data: Data):
         self.pygame_module = pygame_module
         self.screen = screen
-        self.events = events
         self.data = data
     
-    def update(self):
+    def update(self, events):
         pass
     
     def render(self):

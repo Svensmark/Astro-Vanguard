@@ -20,24 +20,24 @@ class SceneManager:
         self.data = data
 
         self.scenes = {
-            "MainMenu": MainMenu(self.pygame_module, self.screen, self.events, self.data),
-            "GameScene": GameScene(self.pygame_module, self.screen, self.events, self.data),
-            "DeathScene": DeathScene(self.pygame_module, self.screen, self.events, self.data),
+            "MainMenu": MainMenu(self.pygame_module, self.screen, self.data),
+            "GameScene": GameScene(self.pygame_module, self.screen, self.data),
+            "DeathScene": DeathScene(self.pygame_module, self.screen, self.data),
         }
 
         self.start_scene()
         
                 
     def start_scene(self):
-        self.set_scene('GameScene')
+        self.set_scene('MainMenu')
                 
     def set_scene(self, scene: str):
         self.current_scene = self.scenes[scene]
         
         
-    def update_current_scene(self):
+    def update_current_scene(self, events: list[str]):
         if self.current_scene:
-            next_scene_name = self.current_scene.update()
+            next_scene_name = self.current_scene.update(events)
             if next_scene_name != self.current_scene.name:
                 #print(self.scenes[next_scene_name].name)
                 self.set_scene(next_scene_name)

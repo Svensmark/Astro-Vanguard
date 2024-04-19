@@ -18,16 +18,14 @@ pygame.init()
 pygame.display.set_caption('Astro Vanguard')
 screen = pygame.display.set_mode((data.game_data.screen_width, data.game_data.screen_height))
 clock = pygame.time.Clock()
-CLICK = False
 scene_manager = SceneManager(pygame, screen, pygame.event.get(), data)
 
 
 # Main game loop
 while True:
 
-    mouse = pygame.mouse.get_pos()
-
-    # Check for exiting game
+    # Check for events
+    events = []
     for event in pygame.event.get():
         if event.type == QUIT:
             # pylint: disable=no-member
@@ -35,9 +33,10 @@ while True:
             # pylint: enable=no-member
             sys.exit()
         if event.type == MOUSEBUTTONDOWN:
-            CLICK = True
+            events.append('MOUSEBUTTONDOWN')
 
-    scene_manager.update_current_scene()
+    # Handle scenes
+    scene_manager.update_current_scene(events)
 
     pygame.display.update()
     clock.tick(data.game_data.fps)
