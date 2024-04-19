@@ -7,10 +7,10 @@ from utils.background import Background
 from utils.data import Data
 
 
-class GameScene(Scene):
+class DeathScene(Scene):
     def __init__(self, pygame_module: pygame, screen: pygame.Surface, events: pygame.event, data: Data):
         super().__init__(pygame_module, screen, events, data)
-        self.name = 'GameScene'
+        self.name = 'DeathScene'
         self.pygame_module = pygame_module
         self.screen = screen
         self.events = events
@@ -22,22 +22,15 @@ class GameScene(Scene):
         self.interface = Interface(pygame, screen, data.player_data)
         
     def update(self):
-        self.background.draw()
-
-        # Updates
-        self.player.update(self.data.player_data, pygame.key.get_pressed(), self.data.game_data)
-        self.spawner.update(self.data.game_data, self.data.player_data, self.data.enemy_data, self.data.spawner_data, self.data.asset_data)
-        self.interface.update(self.data.player_data, self.data.game_data)
-
-        # Handle data to be removed
-        for lazer in self.data.game_data.lazers:
-            lazer.update(self.data.game_data)
-
-        # Check if game is over
-        ## TODO - Add menu for death screen
-        if self.data.player_data.current_hp == 0:
-            self.player.death.play()
-            return 'DeathScene'
+        self.screen.fill("Red")
+        font = pygame.font.Font(None, 36)
+        hp_surface = font.render("Game Over!", True, "Black")
+        text_rect = hp_surface.get_rect()
+        text_rect.center = (
+        self.data.game_data.screen_width / 2,
+        self.data.game_data.screen_height / 2,
+        )
+        self.screen.blit(hp_surface, text_rect)
         
         return self.name
     

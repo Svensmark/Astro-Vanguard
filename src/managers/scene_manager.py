@@ -1,7 +1,9 @@
 import pygame
+from scenes.death_scene import DeathScene
 from scenes.game_scene import GameScene
 from scenes.main_menu_scene import MainMenu
 from scenes.scene import Scene
+from utils.data import Data
 
 class SceneManager:
     """
@@ -11,19 +13,23 @@ class SceneManager:
     current_scene: Scene
     scenes: dict[Scene]
     
-    def __init__(self, pygame_module: pygame, screen: pygame.Surface, events: pygame.event):
+    def __init__(self, pygame_module: pygame, screen: pygame.Surface, events: pygame.event, data: Data):
         self.pygame_module = pygame_module
         self.screen = screen
         self.events = events
-        
-        
-    def init_scenes(self):
+        self.data = data
+
         self.scenes = {
-            "MainMenu": MainMenu(self.pygame_module, self.screen, self.events),
-            "GameScene": GameScene(self.pygame_module, self.screen, self.events)
+            "MainMenu": MainMenu(self.pygame_module, self.screen, self.events, self.data),
+            "GameScene": GameScene(self.pygame_module, self.screen, self.events, self.data),
+            "DeathScene": DeathScene(self.pygame_module, self.screen, self.events, self.data),
         }
-        self.set_scene('MainMenu')
+
+        self.start_scene()
         
+                
+    def start_scene(self):
+        self.set_scene('GameScene')
                 
     def set_scene(self, scene: str):
         self.current_scene = self.scenes[scene]
@@ -31,5 +37,8 @@ class SceneManager:
         
     def update_current_scene(self):
         if self.current_scene:
-            self.current_scene.update()
+            next_scene_name = self.current_scene.update()
+            if next_scene_name != self.current_scene.name:
+                #print(self.scenes[next_scene_name].name)
+                self.set_scene(next_scene_name)
             
