@@ -30,15 +30,14 @@ class SceneManager:
                 
     def start_scene(self):
         self.set_scene('MainMenu')
+        
                 
     def set_scene(self, scene: str):
         self.current_scene = self.scenes[scene]
         
         
     def update_current_scene(self, events: list[str]):
-        if self.current_scene:
-            next_scene_name = self.current_scene.update(events)
-            if next_scene_name != self.current_scene.name:
-                #print(self.scenes[next_scene_name].name)
-                self.set_scene(next_scene_name)
+        next_scene_name = self.current_scene.update(events)
+        if next_scene_name != self.current_scene.name:
+            self.set_scene(next_scene_name)
             

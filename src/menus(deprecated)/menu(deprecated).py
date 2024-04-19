@@ -12,6 +12,9 @@ class Menu:
     """
     Class for Menu
     """
+    
+    hover_sound: pygame.mixer.Sound
+
     def __init__(self, pygame_module: pygame, screen: pygame.Surface, buttons: list[button_module.Button], menu_name: str, background: Background, asset_data: AssetData):
         self.pygame = pygame_module
         self.screen = screen
@@ -19,8 +22,6 @@ class Menu:
         self.button_sprites = [self.pygame.sprite.GroupSingle(button) for button in self.buttons]
         self.menu_name = menu_name
         self.background = background
-        self.hover_sound = sound_loader(asset_data.sounds.menu_hover)
-        self.click_sound = sound_loader(asset_data.sounds.menu_select)
 
     def update(self, mouse: tuple[int, int], click: bool) -> str:
         """

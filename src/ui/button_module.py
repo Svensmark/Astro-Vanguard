@@ -5,6 +5,9 @@ from typing import Callable
 import pygame
 from pygame.mixer import Sound
 
+from utils.asset_loader import sound_loader
+from utils.data import AssetData, Data
+
 COLOR = (255, 255, 255)  # white
 COLOR_LIGHT = (170, 170, 170)
 COLOR_DARK = (100, 100, 100)  # dark shade of the button
@@ -14,8 +17,12 @@ class Button(pygame.sprite.Sprite):
     Class for Button extending pygame.sprite.Sprite
     """
     def __init__(self, screen: pygame.Surface, btn_image: pygame.Surface,
-                x: int, y: int, text: str, function: Callable):
+                x: int, y: int, text: str, function: Callable, data: Data):
         super().__init__()
+
+        self.hover_sound = sound_loader(data.asset_data.sounds.menu_hover)
+        self.click_sound = sound_loader(data.asset_data.sounds.menu_select)
+
         self.screen = screen
         self.x = x
         self.y = y
@@ -44,8 +51,12 @@ class Button(pygame.sprite.Sprite):
         if not self.hovering:
             self.color = "Red"
             self.hovering = True
+            # put this out in own method
             if self.hovering:
                 sound.play()
+
+    def play_click_sound(self):
+        self.click_sound.play()
 
     def set_not_hover(self):
         """

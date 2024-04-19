@@ -33,7 +33,6 @@ class GameScene(Scene):
             lazer.update(self.data.game_data)
 
         # Check if game is over
-        ## TODO - Add menu for death screen
         if self.data.player_data.current_hp == 0:
             self.player.death.play()
             return 'DeathScene'
