@@ -34,4 +34,10 @@ class DeathScene(Scene):
         return self.name
     
     
+    def on_load(self):
+        pass
+    
+    def on_leave(self):
+        pass
+    
         
