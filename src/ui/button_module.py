@@ -33,8 +33,10 @@ class Button(pygame.sprite.Sprite):
         self.image = self.btn_img
         self.rect = self.image.get_rect(topleft=(x, y))
         self.function = function
+        self.clicked = False
 
-    def hover(self, mouse: tuple[int, int]) -> bool:
+
+    def is_hovering(self, mouse: tuple[int, int]) -> bool:
         """
         Method to check if mouse is hovering over the button
         """
@@ -44,26 +46,52 @@ class Button(pygame.sprite.Sprite):
                 <= mouse[1]
                 <= self.y + self.rect.height)
 
-    def set_hover(self, sound: Sound):
+    def set_hover(self, value: bool, text_color: str):
         """
-        Method to set hover state
+        Method to set hover state, which also changes the color
         """
-        if not self.hovering:
-            self.color = "Red"
-            self.hovering = True
-            # put this out in own method
-            if self.hovering:
-                sound.play()
+        self.color = text_color
+        self.hover = value
+        if value:
+            if not self.hovering:
+                self.hovering = True
+                # put this out in own method
+                if self.hovering:
+                    self.hover_sound.play()
+        else:
+            self.hovering = False
+                
 
     def play_click_sound(self):
+        """
+        Method to play sound when button is clicked
+        """
         self.click_sound.play()
 
-    def set_not_hover(self):
+
+    def play_hover_sound(self):
         """
-        Method to unset hover state
+        Method to play sound when button is hovered
         """
-        self.color = "Black"
-        self.hovering = False
+        self.hover_sound.play()
+        
+        
+    def update(self, mouse_position: tuple[int,int], events: list[str]):
+
+        self.screen.blit(self.btn_img, (self.x, self.y))
+        if self.is_hovering(mouse_position):
+            self.set_hover(True, "Red")
+            self.draw_text()
+            if 'MOUSEBUTTONDOWN' in events:
+                self.click_sound.play()
+                self.clicked = True
+                return
+        else:
+            self.set_hover(False, "Black")
+            self.draw_text()
+        
+        self.clicked = False
+        
 
     def draw_text(self):
         """

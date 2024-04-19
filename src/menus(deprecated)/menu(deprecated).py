@@ -30,13 +30,13 @@ class Menu:
         self.background.draw_static()
         for i, btn in enumerate(self.buttons):
             sprite = self.button_sprites[i]
-            if btn.hover(mouse):
+            if btn.is_hovering(mouse):
                 btn.set_hover(self.hover_sound)
             else:
                 btn.set_not_hover()
             sprite.draw(self.screen, mouse)
             btn.draw_text()
-            if click and btn.hover(mouse):
+            if click and btn.is_hovering(mouse):
                 self.click_sound.play()
                 return btn.function()
         return self.menu_name

@@ -14,25 +14,20 @@ class MainMenu(Scene):
         self.screen = screen
         self.data = data
         
-        self.start_btn = Button(screen, sprite_loader(pygame_module, data.asset_data.images.menu_btn), 235, 100, "Start", start_btn, data)
+        self.start_btn = Button(screen, sprite_loader(pygame_module, data.asset_data.images.menu_btn), 220, 100, "Start", start_btn, data)
         self.background = Background(self.pygame_module, self.screen)
         
     def update(self, events):
+        mouse_position = self.pygame_module.mouse.get_pos()
+        
         self.background.draw_static()
         self.screen.blit(self.start_btn.btn_img, (self.start_btn.x, self.start_btn.y))
-
-        #TODO Handle clicks in button class
-        if self.start_btn.hover(self.pygame_module.mouse.get_pos()):
-            self.start_btn.set_hover(self.start_btn.hover_sound)
-            if 'MOUSEBUTTONDOWN' in events:                    
-                self.start_btn.play_click_sound()
-                return self.start_btn.function()
-        else:
-            self.start_btn.set_not_hover()
-            self.screen.blit(self.start_btn.btn_img, (self.start_btn.x, self.start_btn.y))
-
-        # This is fine
-        self.start_btn.draw_text()
+        
+        self.start_btn.update(mouse_position, events)
+        
+        if self.start_btn.clicked:
+            return self.start_btn.function()
+        
         return self.name
     
 
