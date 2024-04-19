@@ -39,11 +39,9 @@ CLICK = False
 # Helper classes init
 player = Player(pygame, screen, player_data, asset_data)
 spawner = Spawner(pygame, screen)
-background = Background(pygame, screen)
 interface = Interface(pygame, screen, player_data)
 
 
-# TODO - Move scenes to json
 scene_manager = SceneManager(pygame, screen, pygame.event.get())
 scene_manager.init_scenes()
 

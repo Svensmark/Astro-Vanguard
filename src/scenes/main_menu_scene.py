@@ -1,6 +1,6 @@
 import pygame
 from scenes.scene import Scene
-from utils import asset_loader
+from utils.background import Background
 
 
 class MainMenu(Scene):
@@ -10,9 +10,10 @@ class MainMenu(Scene):
         self.screen = screen
         self.events = events
         
+        self.background = Background(self.pygame_module, self.screen)
+        
     def update(self):
-        self.screen.blit(asset_loader.sprite_loader(self.pygame_module, 'assets/background.png'), (100,100))
-        return "MainMenu"
+        self.background.draw_static()
 
     
         
