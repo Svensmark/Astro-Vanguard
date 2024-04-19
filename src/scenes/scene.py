@@ -13,6 +13,12 @@ class Scene:
         self.pygame_module = pygame_module
         self.screen = screen
         self.data = data
+        
+    def on_load(self):
+        pass
+    
+    def on_leave(self):
+        pass
     
     def update(self, events):
         pass

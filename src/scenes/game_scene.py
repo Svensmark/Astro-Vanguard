@@ -3,6 +3,7 @@ from entities.player import Player
 from managers.entity_manager import Spawner
 from scenes.scene import Scene
 from ui.interface import Interface
+from utils import asset_loader
 from utils.background import Background
 from utils.data import Data
 
@@ -20,6 +21,8 @@ class GameScene(Scene):
         self.spawner = Spawner(pygame, screen)
         self.interface = Interface(pygame, screen, data.player_data)
         
+        self.music = asset_loader.sound_loader('assets/sounds/music/galactic_skirmish.ogg')
+        
     def update(self, events):
         self.background.draw()
 
@@ -35,9 +38,14 @@ class GameScene(Scene):
         # Check if game is over
         if self.data.player_data.current_hp == 0:
             self.player.death.play()
-            return 'DeathScene'
+            return 'MainMenu'
         
         return self.name
     
+    def on_load(self):
+        self.music.play(loops=10, fade_ms=4000)
+    
+    def on_leave(self):
+        self.music.fadeout(2000)
     
         
