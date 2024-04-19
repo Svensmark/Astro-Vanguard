@@ -7,9 +7,9 @@ import pygame
 from pygame.constants import QUIT, MOUSEBUTTONDOWN
 # pylint: enable=no-name-in-module
 
-from managers.scene_manager import SceneController
-from scenes.game import GameScene
-from scenes.main_menu import MainMenu
+from managers.scene_manager import SceneManager
+from scenes.game_scene import GameScene
+from scenes.main_menu_scene import MainMenu
 from utils.data import Data
 from utils.background import Background
 from ui.interface import Interface
@@ -43,18 +43,10 @@ background = Background(pygame, screen)
 interface = Interface(pygame, screen, player_data)
 
 
-# Scenes
-main_menu = get_main_menu(pygame, screen, background, asset_data)
 # TODO - Move scenes to json
-scenes = {
-    "MainMenu": MainMenu(pygame, screen),
-    "GameScene": GameScene()
-}
-scene_manager = SceneController(scenes)
-scene_manager.set_scene('MainMenu')
+scene_manager = SceneManager(pygame, screen, pygame.event.get())
+scene_manager.init_scenes()
 
-# Scene selector
-SCENE_SELECTOR = "Main"
 
 # Main game loop
 while True:
@@ -71,7 +63,7 @@ while True:
         if event.type == MOUSEBUTTONDOWN:
             CLICK = True
 
-    scene_controller.update_current_scene()
+    scene_manager.update_current_scene()
 
     # match SCENE_SELECTOR:
     #     case "Main":
