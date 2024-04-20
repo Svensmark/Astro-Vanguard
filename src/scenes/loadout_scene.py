@@ -15,8 +15,8 @@ class LoadoutScene(Scene):
         self.screen = screen
         self.data = data
         
-        self.start_btn = Button(screen, sprite_loader(pygame_module, data.asset_data.images.menu_btn), 220, 100, "Enter World", start_btn, data)
-        self.main_menu_btn = Button(screen, sprite_loader(pygame_module, data.asset_data.images.menu_btn), 220, 200, "Back", main_menu_btn, data)
+        self.start_btn = Button(screen, sprite_loader(pygame_module, data.asset_data.images.menu_btn), 150, 100, "Enter World", start_btn, data)
+        self.main_menu_btn = Button(screen, sprite_loader(pygame_module, data.asset_data.images.menu_btn), 150, 200, "Back", main_menu_btn, data)
         self.background = Background(self.pygame_module, self.screen)
         
         # TODO - Fix music between menu scenes

@@ -11,7 +11,7 @@ class Player(pygame.Rect):
     """
     Class for Player extending pygame.Rect
     """
-    def __init__(self, pygame: pygame, screen: pygame.surface, player_data: PlayerData, asset_data: AssetData):
+    def __init__(self, pygame: pygame, screen: pygame.Surface, player_data: PlayerData, asset_data: AssetData):
         super().__init__(player_data.start_x, player_data.start_y, player_data.width, player_data.height)
         print(type(asset_data.sounds))
         self.pygame = pygame

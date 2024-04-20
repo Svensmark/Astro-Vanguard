@@ -16,8 +16,8 @@ class MainMenu(Scene):
         self.screen = screen
         self.data = data
         
-        self.start_btn = Button(screen, sprite_loader(pygame_module, data.asset_data.images.menu_btn), 220, 100, "Start", start_btn, data)
-        self.quit_btn = Button(screen, sprite_loader(pygame_module, data.asset_data.images.menu_btn), 220, 200, "Quit", quit_btn, data)
+        self.start_btn = Button(screen, sprite_loader(pygame_module, data.asset_data.images.menu_btn), screen.get_width()/2-175, 100, "Start", start_btn, data)
+        self.quit_btn = Button(screen, sprite_loader(pygame_module, data.asset_data.images.menu_btn), screen.get_width()/2-175, 200, "Quit", quit_btn, data)
         self.buttons = [self.start_btn, self.quit_btn]
         
         self.background = Background(self.pygame_module, self.screen)

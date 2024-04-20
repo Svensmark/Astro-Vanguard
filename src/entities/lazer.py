@@ -12,7 +12,7 @@ class Lazer(pygame.Rect):
     """
     Class for spawning and updating lazer
     """
-    def __init__(self, pygame: pygame, screen: pygame.surface, x: int, y: int):
+    def __init__(self, pygame: pygame, screen: pygame.Surface, x: int, y: int):
         self.pygame = pygame
         self.screen = screen
         self.x = x
@@ -30,7 +30,7 @@ class Lazer(pygame.Rect):
         """
         self.x += 5
 
-        if self.x > self.screen.get_width()+50:
+        if self.x > self.screen.get_width()+100:
             game_data.lazers.remove(self)
 
     def draw(self):
