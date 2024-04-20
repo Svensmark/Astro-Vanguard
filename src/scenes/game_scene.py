@@ -38,6 +38,7 @@ class GameScene(Scene):
         # Check if game is over
         if self.data.player_data.current_hp == 0:
             self.player.death.play()
+            self.reset()
             return 'MainMenu'
         
         return self.name
@@ -48,4 +49,8 @@ class GameScene(Scene):
     def on_leave(self):
         self.music.fadeout(2000)
     
+    def reset(self):
+        self.player.reset(self.data.player_data)
+        self.data.game_data.reset()
+        self.data.player_data.reset()
         

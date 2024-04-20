@@ -7,17 +7,18 @@ from utils.background import Background
 from utils.data import Data
 
 
-class MainMenu(Scene):
+class LoadoutScene(Scene):
     def __init__(self, pygame_module: pygame, screen: pygame.Surface, data: Data):
         super().__init__(pygame_module, screen, data)
-        self.name = 'MainMenu'
+        self.name = 'LoadoutScene'
         self.pygame_module = pygame_module
         self.screen = screen
         self.data = data
         
-        self.start_btn = Button(screen, sprite_loader(pygame_module, data.asset_data.images.menu_btn), 220, 100, "Start", start_btn, data)
+        self.start_btn = Button(screen, sprite_loader(pygame_module, data.asset_data.images.menu_btn), 220, 100, "Enter World", start_btn, data)
         self.background = Background(self.pygame_module, self.screen)
         
+        # TODO - Fix music between menu scenes
         self.music = asset_loader.sound_loader('assets/sounds/music/galactic_odyssey.ogg')
         
     def update(self, events):
@@ -33,6 +34,12 @@ class MainMenu(Scene):
         
         return self.name
     
+    def render(self):
+        self.background.draw_static()
+        self.screen.blit(self.start_btn.btn_img, (self.start_btn.x, self.start_btn.y))
+        self.start_btn.draw_text()
+        
+    
     def on_load(self):
         self.music.play(loops=10, fade_ms=4000)
     
@@ -42,4 +49,4 @@ class MainMenu(Scene):
 
 
 def start_btn():
-    return 'LoadoutScene'
+    return 'GameScene'

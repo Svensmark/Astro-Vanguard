@@ -20,7 +20,6 @@ screen = pygame.display.set_mode((data.game_data.screen_width, data.game_data.sc
 clock = pygame.time.Clock()
 scene_manager = SceneManager(pygame, screen, pygame.event.get(), data)
 
-
 # Main game loop
 while True:
 

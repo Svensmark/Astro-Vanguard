@@ -105,6 +105,10 @@ class Player(pygame.Rect):
                 game_data.enemies.remove(enemy)
                 player_data.current_hp -= 20
 
+    def reset(self, player_data: PlayerData):
+        self.x = player_data.start_x
+        self.y = player_data.start_y
+
 
     def update(self, player_data: PlayerData, keys: tuple[bool, ...], game_data: GameData):
         """
