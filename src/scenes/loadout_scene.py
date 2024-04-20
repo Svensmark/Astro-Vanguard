@@ -15,8 +15,8 @@ class LoadoutScene(Scene):
         self.screen = screen
         self.data = data
         
-        self.start_btn = Button(screen, sprite_loader(pygame_module, data.asset_data.images.menu_btn), 150, 100, "Enter World", start_btn, data)
-        self.main_menu_btn = Button(screen, sprite_loader(pygame_module, data.asset_data.images.menu_btn), 150, 200, "Back", main_menu_btn, data)
+        self.start_btn = Button(screen, sprite_loader(pygame_module, data.asset_data.images.menu_btn), 150, 350, "Enter World", start_btn, data)
+        self.main_menu_btn = Button(screen, sprite_loader(pygame_module, data.asset_data.images.menu_btn), 150, 450, "Back", main_menu_btn, data)
         self.background = Background(self.pygame_module, self.screen)
         
         # TODO - Fix music between menu scenes
@@ -32,6 +32,9 @@ class LoadoutScene(Scene):
         self.start_btn.update(mouse_position, events)
         self.main_menu_btn.update(mouse_position, events)
         
+        self.draw_player()
+        self.draw_inventory()
+        
         if self.start_btn.clicked:
             return self.start_btn.function()
         elif self.main_menu_btn.clicked:
@@ -39,13 +42,28 @@ class LoadoutScene(Scene):
         else:
             return self.name
     
+    # TODO - Move into own class
+    def draw_player(self):
+        veil = self.pygame_module.Surface((350, 225))
+        veil.fill((128, 128, 128))
+        veil.set_alpha(128)
+        self.screen.blit(veil, (150,100))
+    
+    # TODO - Move into own class
+    def draw_inventory(self):
+        veil = self.pygame_module.Surface((400, 450))
+        veil.fill((128, 128, 128))
+        veil.set_alpha(128)
+        self.screen.blit(veil, (550,100))
+    
     def render(self):
         self.background.draw_static()
+        self.draw_player()
+        self.draw_inventory()
         self.screen.blit(self.start_btn.btn_img, (self.start_btn.x, self.start_btn.y))
         self.screen.blit(self.main_menu_btn.btn_img, (self.main_menu_btn.x, self.main_menu_btn.y))
         self.start_btn.draw_text()
-        self.main_menu_btn.draw_text()
-        
+        self.main_menu_btn.draw_text()        
     
     def on_load(self):
         self.music.play(loops=10, fade_ms=4000)
