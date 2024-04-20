@@ -39,7 +39,7 @@ class GameScene(Scene):
         if self.data.player_data.current_hp == 0:
             self.player.death.play()
             self.reset()
-            return 'MainMenu'
+            return 'LoadoutScene'
         
         return self.name
     

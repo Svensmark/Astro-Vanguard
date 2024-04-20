@@ -45,6 +45,5 @@ class SceneManager:
             self.current_scene.fadeout() 
             self.current_scene.on_leave()
             self.set_scene(next_scene_name)   
-            #self.current_scene.update(events)
-            self.current_scene.fadein(events) 
+            self.current_scene.fadein() 
             

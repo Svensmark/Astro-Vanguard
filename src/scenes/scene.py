@@ -30,15 +30,15 @@ class Scene:
     def handle_events(self):
         pass
     
-    def fadein(self, events):
+    def fadein(self):
         veil = self.pygame_module.Surface((self.screen.get_width(), self.screen.get_height()))
-        for i in range(255):
+        for i in range(127):
             self.render()
             veil.fill((0, 0, 0))  
-            veil.set_alpha(255 - i)
+            veil.set_alpha(220 - i*2)
             self.screen.blit(veil, (0, 0))
             self.pygame_module.display.flip()  # Update the display
-            self.pygame_module.time.delay(5)  # Delay for smoother effect
+            self.pygame_module.time.delay(2)  # Delay for smoother effect
 
     def fadeout(self):
         veil = self.pygame_module.Surface((self.screen.get_width(), self.screen.get_height()))

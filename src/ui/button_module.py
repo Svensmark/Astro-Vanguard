@@ -85,6 +85,7 @@ class Button(pygame.sprite.Sprite):
             if 'MOUSEBUTTONDOWN' in events:
                 self.click_sound.play()
                 self.clicked = True
+                self.set_hover(False, "Black")
                 return
         else:
             self.set_hover(False, "Black")
