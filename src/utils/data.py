@@ -38,6 +38,11 @@ class GameData:
     score: int = 0
     lazers: list = dataclasses.field(default_factory=list)
     enemies: list = dataclasses.field(default_factory=list)
+    
+    def reset(self):
+        self.score = 0
+        self.lazers.clear()
+        self.enemies.clear()
 
 @dataclasses.dataclass
 class PlayerData:
@@ -59,6 +64,10 @@ class PlayerData:
 
     def __post_init__(self):
         self.current_hp = self.max_hp
+        
+    def reset(self):
+        self.current_hp = self.max_hp
+        self.current_shoot_cooldown = 0
 
 @dataclasses.dataclass
 class EnemyData:
@@ -68,6 +77,7 @@ class EnemyData:
     width: int
     height: int
     spawn_rate: int
+    
 
 @dataclasses.dataclass
 class SpawnerData:

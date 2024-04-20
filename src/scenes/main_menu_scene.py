@@ -5,6 +5,7 @@ from utils import asset_loader
 from utils.asset_loader import sprite_loader
 from utils.background import Background
 from utils.data import Data
+import sys
 
 
 class MainMenu(Scene):
@@ -15,22 +16,27 @@ class MainMenu(Scene):
         self.screen = screen
         self.data = data
         
-        self.start_btn = Button(screen, sprite_loader(pygame_module, data.asset_data.images.menu_btn), 220, 100, "Start", start_btn, data)
+        self.start_btn = Button(screen, sprite_loader(pygame_module, data.asset_data.images.menu_btn), screen.get_width()/2-175, 100, "Start", start_btn, data)
+        self.quit_btn = Button(screen, sprite_loader(pygame_module, data.asset_data.images.menu_btn), screen.get_width()/2-175, 200, "Quit", quit_btn, data)
+        self.buttons = [self.start_btn, self.quit_btn]
+        
         self.background = Background(self.pygame_module, self.screen)
         
         self.music = asset_loader.sound_loader('assets/sounds/music/galactic_odyssey.ogg')
         
     def update(self, events):
         mouse_position = self.pygame_module.mouse.get_pos()
-        
         self.background.draw_static()
-        self.screen.blit(self.start_btn.btn_img, (self.start_btn.x, self.start_btn.y))
         
-        self.start_btn.update(mouse_position, events)
+        # Button updates
+        for btn in self.buttons:
+            btn.update(mouse_position, events)
         
-        if self.start_btn.clicked:
-            return self.start_btn.function()
-        
+        # Check for button clicks
+        for btn in self.buttons:
+            if btn.clicked:
+                return btn.function()
+            
         return self.name
     
     def on_load(self):
@@ -39,7 +45,17 @@ class MainMenu(Scene):
     def on_leave(self):
         self.music.fadeout(2000)
     
-
+    def render(self):
+        self.background.draw_static()
+        for btn in self.buttons:
+            self.screen.blit(btn.btn_img, (btn.x, btn.y))
+            btn.draw_text()
 
 def start_btn():
-    return 'GameScene'
+    return 'LoadoutScene'
+
+def quit_btn():
+    # pylint: disable=no-member
+    pygame.quit()
+    # pylint: enable=no-member
+    sys.exit()

@@ -10,7 +10,7 @@ class Enemy(pygame.Rect):
     """
     Class for Enemy extending pygame.Rect
     """
-    def __init__(self, pygame: pygame, screen: pygame.surface, x: int, y: int, collision_sound: pygame.mixer.Sound):
+    def __init__(self, pygame: pygame, screen: pygame.Surface, x: int, y: int, collision_sound: pygame.mixer.Sound):
         file_reader_game = FileReader()
         enemy_data = file_reader_game.read_json("enemy.json")
 
@@ -32,7 +32,7 @@ class Enemy(pygame.Rect):
         """
         self.x -= 5
         if self.x < 0:
-            self.x = 800
+            self.x = self.screen.get_width()+20
 
 
     def draw(self):

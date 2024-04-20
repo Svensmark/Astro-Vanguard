@@ -11,7 +11,7 @@ class Player(pygame.Rect):
     """
     Class for Player extending pygame.Rect
     """
-    def __init__(self, pygame: pygame, screen: pygame.surface, player_data: PlayerData, asset_data: AssetData):
+    def __init__(self, pygame: pygame, screen: pygame.Surface, player_data: PlayerData, asset_data: AssetData):
         super().__init__(player_data.start_x, player_data.start_y, player_data.width, player_data.height)
         print(type(asset_data.sounds))
         self.pygame = pygame
@@ -104,6 +104,10 @@ class Player(pygame.Rect):
                 enemy.collision_sound.play()
                 game_data.enemies.remove(enemy)
                 player_data.current_hp -= 20
+
+    def reset(self, player_data: PlayerData):
+        self.x = player_data.start_x
+        self.y = player_data.start_y
 
 
     def update(self, player_data: PlayerData, keys: tuple[bool, ...], game_data: GameData):

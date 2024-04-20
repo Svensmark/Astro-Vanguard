@@ -1,6 +1,7 @@
 import pygame
 from scenes.death_scene import DeathScene
 from scenes.game_scene import GameScene
+from scenes.loadout_scene import LoadoutScene
 from scenes.main_menu_scene import MainMenu
 from scenes.scene import Scene
 from utils.data import Data
@@ -21,8 +22,9 @@ class SceneManager:
 
         self.scenes = {
             "MainMenu": MainMenu(self.pygame_module, self.screen, self.data),
+            "LoadoutScene": LoadoutScene(self.pygame_module, self.screen, self.data),
             "GameScene": GameScene(self.pygame_module, self.screen, self.data),
-            "DeathScene": DeathScene(self.pygame_module, self.screen, self.data),
+            "DeathScene": DeathScene(self.pygame_module, self.screen, self.data)
         }
 
         self.start_scene()
@@ -40,6 +42,8 @@ class SceneManager:
     def update_current_scene(self, events: list[str]):
         next_scene_name = self.current_scene.update(events)
         if next_scene_name != self.current_scene.name:
+            self.current_scene.fadeout() 
             self.current_scene.on_leave()
-            self.set_scene(next_scene_name)
+            self.set_scene(next_scene_name)   
+            self.current_scene.fadein() 
             
