@@ -11,12 +11,12 @@ class Player(pygame.Rect):
     """
     Class for Player extending pygame.Rect
     """
-    def __init__(self, pygame: pygame, screen: pygame.Surface, player_data: PlayerData, asset_data: AssetData):
+    def __init__(self, pygame_module: pygame, screen: pygame.Surface, player_data: PlayerData, asset_data: AssetData):
         super().__init__(player_data.start_x, player_data.start_y, player_data.width, player_data.height)
         print(type(asset_data.sounds))
-        self.pygame = pygame
+        self.pygame_module = pygame_module
         self.screen = screen
-        self.sprite = sprite_loader(self.pygame, 'assets/heroship/player2.png')
+        self.sprite = sprite_loader(self.pygame_module, 'assets/heroship/player2.png')
         self.velocity = player_data.velocity
         self.acceleration = player_data.acceleration
         self.max_speed = player_data.max_speed
@@ -30,20 +30,20 @@ class Player(pygame.Rect):
         self.animation_list = []
         self.frame_index = 0
         for i in range(4):
-            self.animation_list.append(sprite_loader(self.pygame, f'assets/heroship/heroship_animated_{i+1}.png'))
+            self.animation_list.append(sprite_loader(self.pygame_module, f'assets/heroship/heroship_animated_{i+1}.png'))
             
 
     def move(self, keys: tuple[bool, ...]):
         """
         Method for moving player
         """
-        if keys[self.pygame.K_w]:
+        if keys[self.pygame_module.K_w]:
             self.velocity[1] -= self.acceleration
-        if keys[self.pygame.K_s]:
+        if keys[self.pygame_module.K_s]:
             self.velocity[1] += self.acceleration
-        if keys[self.pygame.K_a]:
+        if keys[self.pygame_module.K_a]:
             self.velocity[0] -= self.acceleration
-        if keys[self.pygame.K_d]:
+        if keys[self.pygame_module.K_d]:
             self.velocity[0] += self.acceleration
 
         # Apply friction
@@ -67,10 +67,10 @@ class Player(pygame.Rect):
         """
         Method for player shooting
         """
-        if keys[self.pygame.K_SPACE]:
+        if keys[self.pygame_module.K_SPACE]:
             if self.shoot_cooldown == 0:
                 self.shooting_sound.play()
-                game_data.lazers.append(Lazer(self.pygame, self.screen, self.midright[0], self.midright[1]))
+                game_data.lazers.append(Lazer(self.pygame_module, self.screen, self.midright[0], self.midright[1]))
                 self.shoot_cooldown = 15
                 
 
