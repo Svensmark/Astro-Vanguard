@@ -17,8 +17,9 @@ class MainMenu(Scene):
         self.data = data
         
         self.start_btn = Button(screen, sprite_loader(pygame_module, data.asset_data.images.menu_btn), screen.get_width()/2-175, 100, "Start", start_btn, data)
-        self.quit_btn = Button(screen, sprite_loader(pygame_module, data.asset_data.images.menu_btn), screen.get_width()/2-175, 200, "Quit", quit_btn, data)
-        self.buttons = [self.start_btn, self.quit_btn]
+        self.settings_btn = Button(screen, sprite_loader(pygame_module, data.asset_data.images.menu_btn), screen.get_width()/2-175, 200, "Settings", settings_btn, data)
+        self.quit_btn = Button(screen, sprite_loader(pygame_module, data.asset_data.images.menu_btn), screen.get_width()/2-175, 300, "Quit", quit_btn, data)
+        self.buttons = [self.start_btn, self.settings_btn, self.quit_btn]
         
         self.background = Background(self.pygame_module, self.screen)
         
@@ -53,6 +54,9 @@ class MainMenu(Scene):
 
 def start_btn():
     return 'LoadoutScene'
+
+def settings_btn():
+    return 'SettingsMenu'
 
 def quit_btn():
     # pylint: disable=no-member

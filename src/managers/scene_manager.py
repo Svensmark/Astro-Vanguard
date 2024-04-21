@@ -4,6 +4,7 @@ from scenes.game_scene import GameScene
 from scenes.loadout_scene import LoadoutScene
 from scenes.main_menu_scene import MainMenu
 from scenes.scene import Scene
+from scenes.settings_scene import SettingsScene
 from utils.data import Data
 
 class SceneManager:
@@ -24,7 +25,8 @@ class SceneManager:
             "MainMenu": MainMenu(self.pygame_module, self.screen, self.data),
             "LoadoutScene": LoadoutScene(self.pygame_module, self.screen, self.data),
             "GameScene": GameScene(self.pygame_module, self.screen, self.data),
-            "DeathScene": DeathScene(self.pygame_module, self.screen, self.data)
+            "DeathScene": DeathScene(self.pygame_module, self.screen, self.data),
+            "SettingsMenu": SettingsScene(self.pygame_module, self.screen, self.data)
         }
 
         self.start_scene()
