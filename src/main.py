@@ -9,6 +9,11 @@ from pygame.constants import QUIT, MOUSEBUTTONDOWN
 from managers.scene_manager import SceneManager
 from utils.data import Data
 
+# Set working directory
+# This makes it so that the game can be run from any directory
+import os
+os.chdir(os.path.dirname(os.path.abspath(__file__)))
+
 
 # Core game initialization
 data = Data()
