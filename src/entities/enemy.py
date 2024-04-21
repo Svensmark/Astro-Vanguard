@@ -10,12 +10,12 @@ class Enemy(pygame.Rect):
     """
     Class for Enemy extending pygame.Rect
     """
-    def __init__(self, pygame: pygame, screen: pygame.Surface, x: int, y: int, collision_sound: pygame.mixer.Sound):
+    def __init__(self, pygame_module: pygame, screen: pygame.Surface, x: int, y: int, collision_sound: pygame.mixer.Sound):
         file_reader_game = FileReader()
         enemy_data = file_reader_game.read_json("enemy.json")
 
         super().__init__(x, y, enemy_data['width'], enemy_data['height'])
-        self.pygame = pygame
+        self.pygame_module = pygame_module
         self.screen = screen
         self.collision_sound = sound_loader(collision_sound)
         self.x = x
@@ -23,7 +23,7 @@ class Enemy(pygame.Rect):
         self.animation_list = []
         self.frame_index = 0
         for i in range(4):
-            self.animation_list.append(sprite_loader(self.pygame, f'assets/enemyship_1/enemy_ship_1_{i+1}.png'))
+            self.animation_list.append(sprite_loader(self.pygame_module, f'assets/enemyship_1/enemy_ship_1_{i+1}.png'))
 
 
     def move(self):

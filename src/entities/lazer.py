@@ -12,14 +12,14 @@ class Lazer(pygame.Rect):
     """
     Class for spawning and updating lazer
     """
-    def __init__(self, pygame: pygame, screen: pygame.Surface, x: int, y: int):
-        self.pygame = pygame
+    def __init__(self, pygame_module: pygame, screen: pygame.Surface, x: int, y: int):
+        self.pygame_module = pygame_module
         self.screen = screen
         self.x = x
 
         file_reader_game = FileReader()
         lazer_data = file_reader_game.read_json("lazer.json")
-        self.sprite = sprite_loader(self.pygame, 'assets/lazer_bolt.png')
+        self.sprite = sprite_loader(self.pygame_module, 'assets/lazer_bolt.png')
 
         super().__init__(x, y, lazer_data['width'], lazer_data['height'])
 
