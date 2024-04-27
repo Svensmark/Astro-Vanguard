@@ -1,0 +1,44 @@
+[gd_scene load_steps=8 format=3 uid="uid://dxcocbx5fd5c4"]
+
+[ext_resource type="Script" path="res://scenes/Player.cs" id="1_8034i"]
+[ext_resource type="Texture2D" uid="uid://bq5vnm1dh4o63" path="res://assets/heroship/heroship_animated_1.png" id="1_l00sa"]
+[ext_resource type="Texture2D" uid="uid://dy862qfkv51if" path="res://assets/heroship/heroship_animated_2.png" id="2_jxqet"]
+[ext_resource type="Texture2D" uid="uid://da10lfjue5tkp" path="res://assets/heroship/heroship_animated_3.png" id="3_ajerc"]
+[ext_resource type="Texture2D" uid="uid://7yg4w5nx4qaj" path="res://assets/heroship/heroship_animated_4.png" id="4_m1m7n"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_qwvfa"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("1_l00sa")
+}, {
+"duration": 1.0,
+"texture": ExtResource("2_jxqet")
+}, {
+"duration": 1.0,
+"texture": ExtResource("3_ajerc")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4_m1m7n")
+}],
+"loop": true,
+"name": &"default",
+"speed": 8.0
+}]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_ae85g"]
+
+[node name="Player" type="Area2D"]
+scale = Vector2(2, 2)
+script = ExtResource("1_8034i")
+metadata/_edit_group_ = true
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_qwvfa")
+frame_progress = 0.222299
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+rotation = 1.5708
+scale = Vector2(1.975, 1.975)
+shape = SubResource("CapsuleShape2D_ae85g")
+one_way_collision_margin = 0.0
