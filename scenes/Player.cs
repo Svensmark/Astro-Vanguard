@@ -5,13 +5,8 @@ public partial class Player : Area2D
 {
 	[Export]
 	public int Speed { get; set; } = 400;
-	[Export]
-	public int Acceleration { get; set; } = 40;
-	[Export]
-	public int MaxSpeed { get; set; } = 400;
-	[Export]
-	public double Friction  { get; set; } = .15;
 	public Vector2 ScreenSize;
+	public int Velocity = 0;
 	
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
@@ -25,8 +20,13 @@ public partial class Player : Area2D
 		Vector2 inputDirection = Input.GetVector("move_left", "move_right", "move_up", "move_down");
 
 		if (inputDirection.Length() > 0)
-		{
 			inputDirection = inputDirection.Normalized() * Speed;
-		}
+		
+
+		Position += inputDirection * (float)delta;
+		Position = new Vector2(
+			Mathf.Clamp(Position.X, 0, ScreenSize.X),
+			Mathf.Clamp(Position.Y, 0, ScreenSize.Y)
+		);
 	}
 }

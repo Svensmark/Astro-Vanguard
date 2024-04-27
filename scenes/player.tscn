@@ -29,12 +29,13 @@ animations = [{
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_ae85g"]
 
 [node name="Player" type="Area2D"]
+scale = Vector2(2, 2)
 script = ExtResource("1_8034i")
 metadata/_edit_group_ = true
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_qwvfa")
-frame_progress = 0.579518
+frame_progress = 0.222299
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 rotation = 1.5708
