@@ -3,12 +3,12 @@
 importer="mp3"
 type="AudioStreamMP3"
 uid="uid://crff1ua3svx63"
-path="res://.godot/imported/Galatic Skirmish.mp3-6fea1474f50550a39dfb932facbe95bf.mp3str"
+path="res://.godot/imported/Galatic Skirmish.mp3-d7ca6f688446b8120b190753218643e3.mp3str"
 
 [deps]
 
-source_file="res://src/assets/sounds/music/Galatic Skirmish.mp3"
-dest_files=["res://.godot/imported/Galatic Skirmish.mp3-6fea1474f50550a39dfb932facbe95bf.mp3str"]
+source_file="res://assets/sounds/music/Galatic Skirmish.mp3"
+dest_files=["res://.godot/imported/Galatic Skirmish.mp3-d7ca6f688446b8120b190753218643e3.mp3str"]
 
 [params]
 

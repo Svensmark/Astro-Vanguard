@@ -3,15 +3,15 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://cvduqhitd5u1n"
-path="res://.godot/imported/enemy ship shooter.png-d28f38f79062b79ba0ce2f55eac46325.ctex"
+path="res://.godot/imported/enemy ship shooter.png-9fc53358e76f814e040573a999089f5a.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://src/assets/enemy ship shooter.png"
-dest_files=["res://.godot/imported/enemy ship shooter.png-d28f38f79062b79ba0ce2f55eac46325.ctex"]
+source_file="res://assets/enemy ship shooter.png"
+dest_files=["res://.godot/imported/enemy ship shooter.png-9fc53358e76f814e040573a999089f5a.ctex"]
 
 [params]
 

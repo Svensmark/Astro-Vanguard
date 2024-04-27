@@ -3,15 +3,15 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://dgeq6oyanqqm1"
-path="res://.godot/imported/ateroid_1 - Kopi.png-e86dabc1eff19859ac609d0fd5c05ea4.ctex"
+path="res://.godot/imported/ateroid_1 - Kopi.png-e96eff475b0b22abb7b9ca29c6e2fc0b.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://src/assets/ateroid_1 - Kopi.png"
-dest_files=["res://.godot/imported/ateroid_1 - Kopi.png-e86dabc1eff19859ac609d0fd5c05ea4.ctex"]
+source_file="res://assets/ateroid_1 - Kopi.png"
+dest_files=["res://.godot/imported/ateroid_1 - Kopi.png-e96eff475b0b22abb7b9ca29c6e2fc0b.ctex"]
 
 [params]
 

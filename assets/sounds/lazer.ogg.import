@@ -3,12 +3,12 @@
 importer="oggvorbisstr"
 type="AudioStreamOggVorbis"
 uid="uid://dmtj8c07hrlrl"
-path="res://.godot/imported/lazer.ogg-596290ce729d82447aac7a504a2efb08.oggvorbisstr"
+path="res://.godot/imported/lazer.ogg-14d2313f0975d2d4e08111d9eccfed24.oggvorbisstr"
 
 [deps]
 
-source_file="res://src/assets/sounds/lazer.ogg"
-dest_files=["res://.godot/imported/lazer.ogg-596290ce729d82447aac7a504a2efb08.oggvorbisstr"]
+source_file="res://assets/sounds/lazer.ogg"
+dest_files=["res://.godot/imported/lazer.ogg-14d2313f0975d2d4e08111d9eccfed24.oggvorbisstr"]
 
 [params]
 
