@@ -3,15 +3,15 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://btno136ejrpul"
-path="res://.godot/imported/enemy_ship_2.png-10cd837c3351666a1314f24c18aebea4.ctex"
+path="res://.godot/imported/enemy_ship_2.png-16136997b55510d8491fed39db9e5a3e.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://src/assets/enemy_ship_2.png"
-dest_files=["res://.godot/imported/enemy_ship_2.png-10cd837c3351666a1314f24c18aebea4.ctex"]
+source_file="res://assets/enemy_ship_2.png"
+dest_files=["res://.godot/imported/enemy_ship_2.png-16136997b55510d8491fed39db9e5a3e.ctex"]
 
 [params]
 
