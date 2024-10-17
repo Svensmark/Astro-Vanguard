@@ -5,7 +5,7 @@
 Your code has been rated at 9.36/10
 
 Run pylint yourself with this line:
-> OBS! requeres pylint to be installed
+> OBS! requires pylint to be installed
 
 ```powershell
 pylint $(git ls-files '*.py')
